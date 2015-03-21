@@ -21,6 +21,10 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('index');
 	}
+	public function coupon()
+	{
+		$this->load->view('coupon');
+	}
 }
 
 /* End of file welcome.php */
