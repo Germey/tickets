@@ -73,9 +73,6 @@ $(function(){
 	});
 	$("#find-form").validate({
 		debug:true,
-		submitHandler:function(form){ 
-			form.submit();
-		},
 		rules:{
 			phone:{
 				required:true,phone:true

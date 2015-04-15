@@ -56,4 +56,12 @@ class Welcome extends CI_Controller {
 		$this->load->model("seats_model","seats");
 		$this->seats->addSeats();
 	}
+	//查询买到的票的信息
+	public function findInfo(){
+		$phone = $_POST['phone'];
+		$this->load->model("ticket_model","ticket");
+		$result = $this->ticket->findInfo($phone);
+		echo json_encode($result);
+	}
+	
 }

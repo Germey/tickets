@@ -11,7 +11,7 @@
 	class Seats_model extends CI_Model{
 		
 		//构造方法
-		 function __construct(){
+		function __construct(){
 			parent::__construct();
 			$this->load->database();
 		}

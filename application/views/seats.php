@@ -162,7 +162,10 @@
 								<p class="label"></p>
 							</div>
 						</div>
-						<input type="submit" class="btn btn-primary button" value="查询">
+						<input type="submit" class="btn btn-primary button" id="find-button" value="查询">
+					</form>
+					<div id="find-result">
+						<p>lala</p>
 					</div>
 				</div>
 			</div>
