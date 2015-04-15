@@ -25,7 +25,7 @@
 		}
 		
 		//往数据库插入座位，仅供测试使用，危险！
-		public function addSeats(){
+		private function addSeats(){
 			$count=0;
 			for($i=1;$i<=20;$i++){
 				for($j=1;$j<=25;$j++){

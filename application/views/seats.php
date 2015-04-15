@@ -130,11 +130,17 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-xs-12">
-					<form action="" method="post">
+					<form id="buy-form" action="hehe.php" method="post">
 						<p>未购票者入口</p>
-						<input type="text" class="form-control text" placeholder="手机号">
-						<input type="text" class="form-control text" placeholder="姓名">
-						<input type="button" class="btn btn-primary button" value="去支付">
+						<div>
+							<input type="text" class="form-control text" placeholder="手机号" name="phone" id="phone">
+							<p class="label"></p>
+						</div>
+						<div>
+							<input type="text" class="form-control text" placeholder="姓名" name="name" id="name">
+							<p class="label"></p>
+						</div>
+						<input type="submit" class="btn btn-primary button" value="去支付" name="sub" id="sub">
 					</form>
 				</div>
 				<div class="col-sm-6 col-xs-12">

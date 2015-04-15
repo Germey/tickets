@@ -43,5 +43,31 @@ $(function(){
 		$(".groups:visible").hide();
 		$(this).hide();
 	});
-	
+	$("#buy-form").validate({
+		submitHandler:function(form){ 
+			form.submit();
+		},
+		rules:{
+			phone:{
+				required:true,minlength:11
+			},
+			name:{
+				required:true,minlength:2
+			}
+		},
+		errorPlacement:function(error,element){
+			error.appendTo(element.siblings("p"));
+		},
+		messages:{
+			phone:{
+				required:"请输入手机号",minlength:"请输入合法的手机号"
+			},
+			name:{
+				required:"请输入姓名",minlength:"姓名太短"
+			}
+		},
+		success:function(label){
+			label.html("正确");
+		},
+	});
 });
