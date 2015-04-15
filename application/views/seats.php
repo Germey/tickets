@@ -132,22 +132,37 @@
 				<div class="col-sm-6 col-xs-12">
 					<form id="buy-form" action="hehe.php" method="post">
 						<p>未购票者入口</p>
-						<div>
-							<input type="text" class="form-control text" placeholder="手机号" name="phone" id="phone">
-							<p class="label"></p>
+						<div class="form-item">
+							<div class="form-input">
+								<input type="text" class="form-control text" placeholder="手机号" name="phone" id="phone">
+							</div>
+							<div class="form-label">
+								<p class="label"></p>
+							</div>
 						</div>
-						<div>
-							<input type="text" class="form-control text" placeholder="姓名" name="name" id="name">
-							<p class="label"></p>
+						<div class="form-item">
+							<div class="form-input">
+								<input type="text" class="form-control text" placeholder="姓名" name="name" id="name">
+							</div>
+							<div class="form-label">
+								<p class="label"></p>
+							</div>
 						</div>
 						<input type="submit" class="btn btn-primary button" value="去支付" name="sub" id="sub">
 					</form>
 				</div>
 				<div class="col-sm-6 col-xs-12">
-					<div class="find-ticket">
+					<form id="find-form">
 						<p>已购票者查询</p>
-						<input type="text" class="form-control text" placeholder="手机号">
-						<input type="button" class="btn btn-primary button" value="查询">
+						<div class="form-item">
+							<div class="form-input">
+								<input type="text" class="form-control text" placeholder="手机号" name="phone" id="phone">
+							</div>
+							<div class="form-label">
+								<p class="label"></p>
+							</div>
+						</div>
+						<input type="submit" class="btn btn-primary button" value="查询">
 					</div>
 				</div>
 			</div>

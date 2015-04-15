@@ -179,6 +179,7 @@ $.validator = function( options, form ) {
 	this.init();
 };
 
+
 $.validator.format = function(source, params) {
 	if ( arguments.length == 1 ) 
 		return function() {
@@ -1143,4 +1144,11 @@ $.format = $.validator.format;
 			});
 		}
 	});
+	$.validator.addMethod("phone",function(value,element,params){
+		 if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
+			return false;
+		 }else{
+			return true;
+		}
+	},"请输入正确的手机号");
 })(jQuery);

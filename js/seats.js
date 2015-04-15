@@ -49,25 +49,49 @@ $(function(){
 		},
 		rules:{
 			phone:{
-				required:true,minlength:11
+				required:true,phone:true
 			},
 			name:{
 				required:true,minlength:2
 			}
 		},
 		errorPlacement:function(error,element){
-			error.appendTo(element.siblings("p"));
+			element.parent().next().children("p").html="";
+			error.appendTo(element.parent().next().children("p"));
 		},
 		messages:{
 			phone:{
-				required:"请输入手机号",minlength:"请输入合法的手机号"
+				required:"<img src=images/wrong.png>",phone:"<img src=images/wrong.png>"
 			},
 			name:{
-				required:"请输入姓名",minlength:"姓名太短"
+				required:"<img src=images/wrong.png>",minlength:"<img src=images/wrong.png>"
 			}
 		},
 		success:function(label){
-			label.html("正确");
+			label.html("<img src=images/right.png>");
+		}
+	});
+	$("#find-form").validate({
+		debug:true,
+		submitHandler:function(form){ 
+			form.submit();
 		},
+		rules:{
+			phone:{
+				required:true,phone:true
+			}
+		},
+		errorPlacement:function(error,element){
+			element.parent().next().children("p").html="";
+			error.appendTo(element.parent().next().children("p"));
+		},
+		messages:{
+			phone:{
+				required:"<img src=images/wrong.png>",phone:"<img src=images/wrong.png>"
+			}
+		},
+		success:function(label){
+			label.html("<img src=images/right.png>");
+		}
 	});
 });

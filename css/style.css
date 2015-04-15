@@ -175,7 +175,8 @@ body{
 }
 #seats #personal-info .text{
 	max-width:300px;
-	margin:20px auto;
+	margin:10px auto;
+	width:115%;
 }
 #seats #personal-info form{
 	max-width:300px;
@@ -183,7 +184,7 @@ body{
 }
 #seats #personal-info .button{
 	width:100%;
-	margin:0px auto;
+	margin:10px auto;
 }
 #seats #personal-info p{
 	width:100%;
@@ -193,7 +194,7 @@ body{
 }
 #seats #personal-info .find-ticket{
 	max-width:300px;
-	margin:20px auto;
+	margin:10px auto 10px auto;
 }
 #seats .seat-tip{
 	width:60px;
@@ -205,6 +206,17 @@ body{
 	font-size:10px;
 	line-height:18px;
 	text-align:center;
+}
+#seats .form-item{
+	overflow:hidden;
+}
+#seats .form-item .form-input{
+	float:left;
+	width:87%;
+}
+#seats .form-item .form-label{
+	float:left;
+	margin: 13px 5px;
 }
 /* 底部版权 */
 .foot{
