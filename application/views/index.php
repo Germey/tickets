@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>演唱会选座支付页面</title>   
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">   		
-		<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+        <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet">   		
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>font-awesome/css/font-awesome.min.css" />
         <!--[if lt IE 9]>
 			<script src="js/html5shiv.js"></script>
 			<script src="js/respond.min.js"></script>
         <![endif]-->
         <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script> 
+        <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script> 
 		
     </head>
     <body>
@@ -113,7 +113,11 @@
 		</div>
 		<!-- 轮播结束 -->
 		
-		
+		<div id="seats" name="seats">
+			<div id="seats-container" name="seats-container">
+				
+			</div>
+		</div>
 		<!-- 版权 -->
 		<div class="foot">
 			 Copyright © 2015  托管于 <a href="http://www.aliyun.com/">阿里云主机</a>  

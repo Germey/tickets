@@ -17,14 +17,38 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	
+	//加载主界面
 	public function index()
 	{
-		$this->load->view('index');
+		$this->loadHeader();
+		$this->load->view('carousel');
+		$this->load->view('intro');
+		$this->load->view('seats');
+		$this->loadFooter();
 	}
+	//加载头部
+	function loadHeader(){
+		$this->load->view('header');
+		$this->load->view('menubar');
+	}
+	//加载尾部
+	function loadFooter(){
+		$this->load->view('footer');
+	}
+	//优惠券界面
 	public function coupon()
 	{
 		$this->load->view('coupon');
 	}
+	//获得座位信息
+	public function seats(){
+		//$this->load->model("seats_model","seats");
+		//$seatsInfo = $this->seats->getSeatsInfo();
+		//$info['seatsInfo'] = $seatsInfo;
+		$this->load->view('seats');
+	}
+	
 }
 
 /* End of file welcome.php */

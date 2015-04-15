@@ -42,6 +42,8 @@
 
 body{
 	font-family:"Microsoft Yahei";
+	padding:0;
+	margin:0;
 }
 
 /* 轮播 */
@@ -58,8 +60,141 @@ body{
 #navbar #collapse{
 	background-color:#eee;
 }
-
-
+/* 简介 */
+#introduction .intro-item{
+	padding:40px 0 20px 0;
+	text-align:center;
+}
+#introduction .intro-item i{
+	font-size:50px;
+}
+#introduction .intro-item .icon1{
+	color:#37A9DA;
+}
+#introduction .intro-item .icon2{
+	color:#FF5959;
+}
+#introduction .intro-item .icon3{
+	color:#3AE470;
+}
+#introduction .intro-item p{
+	margin-top:30px;
+}
+/*  座位区块 */
+#seats{
+	background-color:#B33A30;
+	padding:50px 0;
+}
+#seats #stage{
+	margin:auto auto;
+	margin-bottom:30px;
+	width:200px;
+	text-align:center;
+	height:50px;
+	line-height:50px;
+	background:#fff;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+#seats #seats-container{
+	margin:auto;
+	overflow: hidden;
+	width: 265px;
+}
+#seats .seat-item{
+	width:20px;
+	height:20px;
+	float:left;
+	background-color:#fff;
+	margin:3px 2px 3px 2px;
+	text-align:center;
+}
+#seats .clear{
+	clear:both;
+}
+#seats #seat-choosen{
+	padding-top: 40px;
+}
+#seats #seat-choosen p{
+	text-align:center;
+	width:200px;
+	padding:10px 0;
+	margin: 0 auto 20px auto;
+	background-color:#FDD18D;
+}
+#seats #seat-choosen li{
+	padding: 10px 20px;
+	background-color: #FDD18D;
+	width: 150px;
+	float: left;
+	margin: 10px 10px;
+	list-style: none;
+	text-align: center;
+}
+#seats #seats-container .side{
+	margin: auto;
+	width: 168px;
+}
+#seats #seats-container .middle{
+	margin: auto;
+	width: 265px;
+}
+#seats .group-names .group-name  {
+	width:30%;
+	text-align:center;
+	float:left;
+	margin: 20px 0;
+	padding: 20px 0;
+	background-color:#FFF;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+#seats .group-names .group-name:hover{
+	background-color:#FDD18D;
+	cursor:pointer;
+}
+#seats .group-names .group-name  p{
+	margin:0px;
+}
+#seats .group-names .aside  {
+	width:5%;
+	float:left;
+	height:1px;
+}
+#seats .back{
+	padding:10px 50px;
+	margin:auto;
+	width:200px;
+	text-align:center;
+	background-color:#FDD18D;
+	cursor:pointer;
+	margin-top: 40px;
+	margin-bottom: 20px;
+}
+#seats #personal-info .text{
+	max-width:300px;
+	margin:20px auto;
+}
+#seats #personal-info form{
+	max-width:300px;
+	margin:20px auto;
+}
+#seats #personal-info .button{
+	width:100%;
+	margin:0px auto;
+}
+#seats #personal-info p{
+	width:100%;
+	text-align:center;
+	color:#FFF;
+	margin:0px auto;
+}
+#seats #personal-info .find-ticket{
+	max-width:300px;
+	margin:20px auto;
+}
 /* 底部版权 */
 .foot{
 	text-align:center;

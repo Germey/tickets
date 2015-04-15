@@ -47,10 +47,10 @@
 
 $active_group = 'default';
 $active_record = TRUE;
-
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = '';
-$db['default']['password'] = '';
+//此处暂用IP地址，用来远程调试用，完毕之后改为localhost
+$db['default']['hostname'] = '121.42.8.51';
+$db['default']['username'] = 'cqc';
+$db['default']['password'] = 'CQCcqc123';
 $db['default']['database'] = '';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
