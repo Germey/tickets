@@ -19,37 +19,41 @@ class Welcome extends CI_Controller {
 	 */
 	
 	//加载主界面
-	public function index()
-	{
+	public function index(){
 		$this->loadHeader();
 		$this->load->view('carousel');
 		$this->load->view('intro');
-		$this->load->view('seats');
+		$this->loadSeats();
 		$this->loadFooter();
 	}
+	
 	//加载头部
 	function loadHeader(){
 		$this->load->view('header');
 		$this->load->view('menubar');
 	}
+	
 	//加载尾部
 	function loadFooter(){
 		$this->load->view('footer');
 	}
+	
 	//优惠券界面
-	public function coupon()
-	{
+	public function coupon(){
 		$this->load->view('coupon');
 	}
+	
 	//获得座位信息
-	public function seats(){
-		//$this->load->model("seats_model","seats");
-		//$seatsInfo = $this->seats->getSeatsInfo();
-		//$info['seatsInfo'] = $seatsInfo;
-		$this->load->view('seats');
+	public function loadSeats(){
+		$this->load->model("seats_model","seats");
+		$seatsInfo = $this->seats->getSeatsInfo();
+		$info['seatsInfo'] = $seatsInfo;
+		$this->load->view('seats',$info);
 	}
 	
+	//往数据库插入座位接口，危险！仅供测试！
+	private function addseats(){
+		$this->load->model("seats_model","seats");
+		$this->seats->addSeats();
+	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

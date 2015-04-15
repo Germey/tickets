@@ -195,6 +195,17 @@ body{
 	max-width:300px;
 	margin:20px auto;
 }
+#seats .seat-tip{
+	width:50px;
+	color:#FFF;
+	height:18px;
+	z-index:1;
+	position:absolute;
+	background-color:#2DD863;
+	font-size:10px;
+	line-height:18px;
+	text-align:center;
+}
 /* 底部版权 */
 .foot{
 	text-align:center;

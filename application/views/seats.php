@@ -37,9 +37,14 @@
 	<div id="seats-container" name="seats-container">
 		<div id="group-1" class="groups side" style="display:none;">
 		<?php 
-			for($i=1;$i<=10;$i++){
-				for($j=1;$j<=7;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+			//前面部分排数，后面部分排数，左边部分列数，中间列数，右边列数
+			$row1=10;$row2=10;$col1=7;$col2=11;$col3=7;
+			$rowSum=$row1+$row2;$colSum=$col1+$col2+$col3;
+		?>
+		<?php 
+			for($i=1;$i<=$row1;$i++){
+				for($j=1;$j<=$col1;$j++){ ?>
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==7){?>
 					<div class="clear"></div>
 					<?php } 
@@ -49,9 +54,9 @@
 		</div>
 		<div id="group-2" class="groups middle" style="display:none;">
 		<?php 
-			for($i=1;$i<=10;$i++){
-				for($j=8;$j<=18;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+			for($i=1;$i<=$row1;$i++){
+				for($j=$col1+1;$j<=$col1+$col2;$j++){ ?>
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==18){?>
 					<div class="clear"></div>
 					<?php }
@@ -61,9 +66,9 @@
 		</div>
 		<div id="group-3" class="groups side" style="display:none;">
 		<?php 
-			for($i=1;$i<=10;$i++){
-				for($j=19;$j<=25;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+			for($i=1;$i<=$row1;$i++){
+				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==25){?>
 					<div class="clear"></div>
 					<?php } 
@@ -73,9 +78,9 @@
 		</div>
 		<div id="group-4" class="groups side" style="display:none;">
 		<?php 
-			for($i=11;$i<=20;$i++){
-				for($j=1;$j<=7;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+			for($i=$row1+1;$i<=$row1+$row2;$i++){
+				for($j=1;$j<=$col1;$j++){ ?>
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==7){?>
 					<div class="clear"></div>
 					<?php } 
@@ -85,9 +90,9 @@
 		</div>
 		<div id="group-5" class="groups middle" style="display:none;">
 		<?php 
-			for($i=11;$i<=20;$i++){
-				for($j=8;$j<=18;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+			for($i=$row1+1;$i<=$row1+$row2;$i++){
+				for($j=$col1+1;$j<=$col1+$col2;$j++){ ?>
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==18){?>
 					<div class="clear"></div>
 					<?php } 
@@ -97,9 +102,9 @@
 		</div>
 		<div id="group-6" class="groups side" style="display:none;">
 		<?php 
-			for($i=11;$i<=20;$i++){
-				for($j=19;$j<=25;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+			for($i=$row1+1;$i<=$row1+$row2;$i++){
+				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==25){?>
 					<div class="clear"></div>
 					<?php } 
@@ -110,6 +115,9 @@
 	</div>
 	<div class="back" style="display:none;">
 		返回
+	</div>
+	<div id="seat-tip" class="seat-tip" style="display:none">
+		<p>提示<p>
 	</div>
 	<div id="seat-choosen">
 		<div class="container">
