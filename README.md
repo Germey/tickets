@@ -1,2 +1,2 @@
-A Project About Tickets of Concert Developed By Zhou Chenwen,Liaoyuming and Cuiqingcai
+A Project About Tickets of Concert Developed By Zhou Chenwen,Liao Yuming and Cui Qingcai
 
