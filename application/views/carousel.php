@@ -10,7 +10,7 @@
 			<!-- 轮播图-->
 			<div class="carousel-inner">
 				<div class="item active">
-					<img src="images/1.png" alt="1 slide">
+					<img src="<?php echo base_url();?>images/1.png" alt="1 slide">
 
 					<div class="container">
 						<div class="carousel-caption">
@@ -22,7 +22,7 @@
 					</div>
 				</div>
 				<div class="item">
-					<img src="images/2.png" alt="2 slide">
+					<img src="<?php echo base_url();?>images/2.png" alt="2 slide">
 
 					<div class="container">
 						<div class="carousel-caption">
@@ -34,7 +34,7 @@
 					</div>
 				</div>
 				<div class="item">
-					<img src="images/3.png" alt="3 slide">
+					<img src="<?php echo base_url();?>images/3.png" alt="3 slide">
 
 					<div class="container">
 						<div class="carousel-caption">
@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="item">
-					<img src="images/4.png" alt="4 slide">
+					<img src="<?php echo base_url();?>images/4.png" alt="4 slide">
 					
 					<div class="container">
 						<div class="carousel-caption">

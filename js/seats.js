@@ -1,4 +1,5 @@
 $(function(){
+	var colNum = 25;
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
@@ -8,11 +9,13 @@ $(function(){
 		if($(this).attr("state")==0){
 			if($(this).attr("select")==0){
 				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("col")+"座"+'</li>');
+				$("#buy-form").append('<input type="hidden" id="hidden-'+$(this).attr("row")+'-'+$(this).attr("col")+'" value="'+((parseInt($(this).attr("row"))-1)*colNum + parseInt($(this).attr("col"))-1)+'" name="seats[]">');
 				$(this).css("background-color","#E22");
 				$(this).attr("select","1");
 			}else if($(this).attr("select")==1){
 				$(this).css("background-color","#FFF");
 				$(this).attr("select","0");
+				$("#hidden-"+$(this).attr("row")+'-'+$(this).attr("col")).remove();
 				$("#seat-choosen ul #selected-"+$(this).attr("row")+"-"+$(this).attr("col")).remove();
 			}
 		}
@@ -42,53 +45,5 @@ $(function(){
 		$(".group-names").show();
 		$(".groups:visible").hide();
 		$(this).hide();
-	});
-	$("#buy-form").validate({
-		submitHandler:function(form){ 
-			form.submit();
-		},
-		rules:{
-			phone:{
-				required:true,phone:true
-			},
-			name:{
-				required:true,minlength:2
-			}
-		},
-		errorPlacement:function(error,element){
-			element.parent().next().children("p").html="";
-			error.appendTo(element.parent().next().children("p"));
-		},
-		messages:{
-			phone:{
-				required:"<img src=images/wrong.png>",phone:"<img src=images/wrong.png>"
-			},
-			name:{
-				required:"<img src=images/wrong.png>",minlength:"<img src=images/wrong.png>"
-			}
-		},
-		success:function(label){
-			label.html("<img src=images/right.png>");
-		}
-	});
-	$("#find-form").validate({
-		debug:true,
-		rules:{
-			phone:{
-				required:true,phone:true
-			}
-		},
-		errorPlacement:function(error,element){
-			element.parent().next().children("p").html="";
-			error.appendTo(element.parent().next().children("p"));
-		},
-		messages:{
-			phone:{
-				required:"<img src=images/wrong.png>",phone:"<img src=images/wrong.png>"
-			}
-		},
-		success:function(label){
-			label.html("<img src=images/right.png>");
-		}
 	});
 });

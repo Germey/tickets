@@ -50,7 +50,9 @@ body{
 .carousel{
 	font-family:"Microsoft Yahei";
 }
-
+.carousel-inner .item img{
+	width:100%;
+}
 /* 导航条 */
 #navbar{
 	margin-bottom:0px;
@@ -121,16 +123,24 @@ body{
 	width:200px;
 	padding:10px 0;
 	margin: 0 auto 20px auto;
-	background-color:#FDD18D;
+	background-color:#D3B144;
+	color:#FFF;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 #seats #seat-choosen li{
 	padding: 10px 20px;
-	background-color: #FDD18D;
+	background-color: #D3B144;
 	width: 150px;
 	float: left;
 	margin: 10px 10px;
 	list-style: none;
+	color:#FFF;
 	text-align: center;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 #seats #seats-container .side{
 	margin: auto;
@@ -168,14 +178,18 @@ body{
 	margin:auto;
 	width:200px;
 	text-align:center;
-	background-color:#FDD18D;
+	background-color:#2AB646;
 	cursor:pointer;
 	margin-top: 40px;
 	margin-bottom: 20px;
+	color:#FFF;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 #seats #personal-info .text{
 	max-width:300px;
-	margin:10px auto;
+	margin:15px auto;
 	width:115%;
 }
 #seats #personal-info form{
@@ -191,6 +205,7 @@ body{
 	text-align:center;
 	color:#FFF;
 	margin:0px auto;
+	padding: 20px;
 }
 #seats #personal-info .find-ticket{
 	max-width:300px;
@@ -216,11 +231,35 @@ body{
 }
 #seats .form-item .form-label{
 	float:left;
-	margin: 13px 5px;
+	margin: 20px 5px;
 }
 #seats #find-form{
 	max-width: 300px;
 	margin: 20px auto;
+}
+#seats #find-result p{
+	margin:10px auto 20px 0;
+}
+#seats #find-result ul{
+	list-style:none;
+	width:380px;
+	margin:auto;
+	color:#FFF;
+	overflow:hidden;
+}
+#seats #find-result ul li{
+	padding: 10px 10px;
+	background-color: #D3B144;
+	width: 140px;
+	text-align: center;
+	float:left;
+	margin:0 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#seats #find-result .none-result{
+	width:100%;
 }
 /* 底部版权 */
 .foot{

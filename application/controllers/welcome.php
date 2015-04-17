@@ -64,4 +64,12 @@ class Welcome extends CI_Controller {
 		echo json_encode($result);
 	}
 	
+	public function getSeats(){
+		$seats = @$_POST['seats'];
+		$phone = $_POST['phone'];
+		$name = $_POST['name'];
+		var_dump($seats);
+		var_dump($phone);
+	}
+	
 }

@@ -56,7 +56,7 @@
 		<?php 
 			for($i=1;$i<=$row1;$i++){
 				for($j=$col1+1;$j<=$col1+$col2;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==18){?>
 					<div class="clear"></div>
 					<?php }
@@ -68,7 +68,7 @@
 		<?php 
 			for($i=1;$i<=$row1;$i++){
 				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==25){?>
 					<div class="clear"></div>
 					<?php } 
@@ -80,7 +80,7 @@
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=1;$j<=$col1;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==7){?>
 					<div class="clear"></div>
 					<?php } 
@@ -92,7 +92,7 @@
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=$col1+1;$j<=$col1+$col2;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==18){?>
 					<div class="clear"></div>
 					<?php } 
@@ -104,7 +104,7 @@
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==25){?>
 					<div class="clear"></div>
 					<?php } 
@@ -130,14 +130,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-xs-12">
-					<form id="buy-form" action="hehe.php" method="post">
+					<form id="buy-form" action="<?php echo base_url();?>index.php/welcome/getSeats" method="post">
 						<p>未购票者入口</p>
 						<div class="form-item">
 							<div class="form-input">
 								<input type="text" class="form-control text" placeholder="手机号" name="phone" id="phone">
 							</div>
 							<div class="form-label">
-								<p class="label"></p>
+								<div class="label"></div>
 							</div>
 						</div>
 						<div class="form-item">
@@ -145,7 +145,7 @@
 								<input type="text" class="form-control text" placeholder="姓名" name="name" id="name">
 							</div>
 							<div class="form-label">
-								<p class="label"></p>
+								<div class="label"></div>
 							</div>
 						</div>
 						<input type="submit" class="btn btn-primary button" value="去支付" name="sub" id="sub">
@@ -159,13 +159,14 @@
 								<input type="text" class="form-control text" placeholder="手机号" name="phone" id="phone">
 							</div>
 							<div class="form-label">
-								<p class="label"></p>
+								<div class="label"></div>
 							</div>
 						</div>
 						<input type="submit" class="btn btn-primary button" id="find-button" value="查询">
 					</form>
 					<div id="find-result">
-						<p>lala</p>
+						<ul>
+						</ul>
 					</div>
 				</div>
 			</div>

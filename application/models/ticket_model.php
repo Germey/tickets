@@ -18,7 +18,7 @@
 		
 		//查询已买的票的信息
 		public function findInfo($phone){
-			$sql = "SELECT * FROM orders WHERE phone = ?";
+			$sql = "SELECT * FROM orders,seats WHERE phone = ? and orders.sid = seats.sid";
 			$result = $this->db->query($sql,array($phone));
 			return $result->result_array();
 		}
