@@ -31,7 +31,6 @@ class Welcome extends CI_Controller {
 		$this->load->view('menubar');
 	}
 	
-	
 	//加载尾部
 	function loadFooter(){
 		$this->load->view('footer');
