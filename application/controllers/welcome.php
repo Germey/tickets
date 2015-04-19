@@ -159,22 +159,4 @@ class Welcome extends CI_Controller {
 		$html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
 		echo $html_text;
 	}
-	
-	public function call_back
-		//支付成功
-		//1.更新订单数据库，订单状态修改为已支付（状态码：1）
-		require_once("phonepay/alipay.config.php");
-		require_once("phonepay/lib/alipay_notify.class.php");
-		header("Content-type: text/html; charset=utf-8"); 
-		$alipayNotify = new AlipayNotify($alipay_config);
-		$verify_result = $alipayNotify->verifyReturn();
-		if($verify_result) {//验证成功
-			$out_trade_no = $_GET['out_trade_no'];
-			//支付宝交易号
-			$trade_no = $_GET['trade_no'];
-			//交易状态
-			$result = $_GET['result'];
-			//
-		}
-	}
 }
