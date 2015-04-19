@@ -63,15 +63,17 @@ class AlipayNotify {
 			$isSign = $this->getSignVeryfy($decrypt_post_para, $_POST["sign"],false);
 			
 			//写日志记录
-			//if ($isSign) {
-			//	$isSignStr = 'true';
-			//}
-			//else {
-			//	$isSignStr = 'false';
-			//}
-			//$log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
-			//$log_text = $log_text.createLinkString($_POST);
-			//logResult($log_text);
+			if ($isSign) {
+				$isSignStr = 'true';
+			}
+			else {
+				$isSignStr = 'false';
+			}
+			$log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
+			$log_text = $log_text.createLinkString($_POST);
+			logResult($log_text);
+			echo "norify内容:"."</br>";
+			echo $log_text."</br>";
 			
 			//验证
 			//$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
@@ -93,19 +95,23 @@ class AlipayNotify {
 			return false;
 		}
 		else {
+			/* unset($_GET['sign_type']);
+			return $_GET; */
 			//生成签名结果
 			$isSign = $this->getSignVeryfy($_GET, $_GET["sign"],true);
 			
 			//写日志记录
-			//if ($isSign) {
-			//	$isSignStr = 'true';
-			//}
-			//else {
-			//	$isSignStr = 'false';
-			//}
-			//$log_text = "return_url_log:isSign=".$isSignStr.",";
-			//$log_text = $log_text.createLinkString($_GET);
-			//logResult($log_text);
+			if ($isSign) {
+				$isSignStr = 'true';
+			}
+			else {
+				$isSignStr = 'false';
+			}
+			$log_text = "return_url_log:isSign=".$isSignStr.",";
+			$log_text = $log_text.createLinkString($_GET);
+			logResult($log_text);
+			echo "log_text内容："."</br>";
+			echo $log_text."</br>";
 			
 			//验证
 			//$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
@@ -149,8 +155,11 @@ class AlipayNotify {
      */
 	function getSignVeryfy($para_temp, $sign, $isSort) {
 		//除去待签名参数数组中的空值和签名参数
+		/* var_dump($para_temp);
+		echo "</br>"; */
 		$para = paraFilter($para_temp);
-		
+		/* echo "sign内容："."</br>";
+		echo $sign."</br>"; */
 		//对待签名参数数组排序
 		if($isSort) {
 			$para = argSort($para);
@@ -160,7 +169,8 @@ class AlipayNotify {
 		
 		//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 		$prestr = createLinkstring($para);
-		
+		/* var_dump($prestr);
+		echo "</br>"; */
 		$isSgin = false;
 		switch (strtoupper(trim($this->alipay_config['sign_type']))) {
 			case "MD5" :
@@ -171,6 +181,7 @@ class AlipayNotify {
 				break;
 			case "0001" :
 				$isSgin = rsaVerify($prestr, trim($this->alipay_config['ali_public_key_path']), $sign);
+				
 				break;
 			default :
 				$isSgin = false;

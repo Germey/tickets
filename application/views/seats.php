@@ -148,6 +148,7 @@
 								<div class="label"></div>
 							</div>
 						</div>
+						<input type="text" name="money" hidden="true" value="0.01">
 						<input type="submit" class="btn btn-primary button" value="去支付" name="sub" id="sub">
 					</form>
 				</div>
