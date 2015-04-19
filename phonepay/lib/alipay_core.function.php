@@ -57,7 +57,6 @@ function paraFilter($para) {
 		if($key == "sign" || $key == "sign_type" || $val == "")continue;
 		else	$para_filter[$key] = $para[$key];
 	}
-	
 	return $para_filter;
 }
 /**

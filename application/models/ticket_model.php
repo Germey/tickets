@@ -7,7 +7,6 @@
  */
 ?>
 <?php
-
 	class Ticket_model extends CI_Model{
 		
 		//构造方法

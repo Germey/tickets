@@ -90,7 +90,7 @@ class Welcome extends CI_Controller {
 		//需http://格式的完整路径，不允许加?id=123这类自定义参数
 
 		//页面跳转同步通知页面路径
-		$call_back_url = "http://shiyida.net:8080/ticket/phonepay/call_back_url.php";
+		$call_back_url = "http://shiyida.net:8080/ticket/index.php/welcome/call_back";
 		//需http://格式的完整路径，不允许加?id=123这类自定义参数
 
 		//操作中断返回地址
@@ -159,5 +159,23 @@ class Welcome extends CI_Controller {
 		$alipaySubmit = new AlipaySubmit($alipay_config);
 		$html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
 		echo $html_text;
+	}
+	
+	public function call_back
+		//支付成功
+		//1.更新订单数据库，订单状态修改为已支付（状态码：1）
+		require_once("phonepay/alipay.config.php");
+		require_once("phonepay/lib/alipay_notify.class.php");
+		header("Content-type: text/html; charset=utf-8"); 
+		$alipayNotify = new AlipayNotify($alipay_config);
+		$verify_result = $alipayNotify->verifyReturn();
+		if($verify_result) {//验证成功
+			$out_trade_no = $_GET['out_trade_no'];
+			//支付宝交易号
+			$trade_no = $_GET['trade_no'];
+			//交易状态
+			$result = $_GET['result'];
+			//
+		}
 	}
 }

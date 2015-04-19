@@ -22,9 +22,9 @@ require_once("lib/alipay_notify.class.php");
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php
 //计算得出通知验证结果
-var_dump($_GET);
+/* var_dump($_GET);
 echo "<br>";
-echo base64_decode((str_replace(" ","+",$_GET['sign']));
+echo base64_decode((str_replace(" ","+",$_GET['sign'])); */
 $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyReturn();
 if($verify_result) {//验证成功
