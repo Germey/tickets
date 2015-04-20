@@ -104,6 +104,17 @@ body{
 	overflow: hidden;
 	width: 265px;
 }
+#seats #total-money{
+	background-color:#28B881;
+	text-align:center;
+	width:100%;
+	padding:8px 10px;
+	border-radius: 5px;
+	color:#FFF;
+	margin:15px auto;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
 #seats .seat-item{
 	width:20px;
 	height:20px;
@@ -130,7 +141,7 @@ body{
 	-moz-border-radius: 5px;
 }
 #seats #seat-choosen li{
-	padding: 10px 20px;
+	padding: 12px 8px 10px 17px;
 	background-color: #D3B144;
 	width: 150px;
 	float: left;
@@ -141,6 +152,17 @@ body{
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	overflow:hidden;
+}
+#seats #seat-choosen li span{
+	float:right;
+}
+#seats #seat-choosen li span img{
+	width:20px;
+	opacity:0.1;
+	cursor:pointer;
+	position: relative;
+	top: -2px;
 }
 #seats #seats-container .side{
 	margin: auto;
