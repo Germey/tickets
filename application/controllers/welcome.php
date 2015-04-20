@@ -15,7 +15,11 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	
+	function __construct(){
+		parent::__construct();
+		$this->load->helper("url");
+		
+	}
 	//加载主界面
 	public function index(){
 		$this->loadHeader();
@@ -50,7 +54,7 @@ class Welcome extends CI_Controller {
 	}
 	
 	//往数据库插入座位接口，危险！仅供测试！
-	private function addseats(){
+	public function addseats(){
 		$this->load->model("seats_model","seats");
 		$this->seats->addSeats();
 	}
@@ -63,53 +67,74 @@ class Welcome extends CI_Controller {
 	} 
 	
 	public function getSeats(){
-		require_once("phonepay/alipay.config.php");
-		require_once("phonepay/lib/alipay_submit.class.php");
+		/*下单页面
+			完成功能：
+			1.更新seats表相应座位的state(状态码：1)
+			2.向订单表插入订单信息
+		*/
+
+		$this->load->model("seats_model","seats");
+		$this->load->model("ticket_model","ticket");
 		$seats = @$_POST['seats'];
 		$phone = $_POST['phone'];
 		$name = $_POST['name'];
 		$money = $_POST['money'];
-		/**************************调用授权接口alipay.wap.trade.create.direct获取授权码token**************************/
-		//返回格式
-		$format = "xml";
-		//必填，不需要修改
+		
+		//获取token需要的各种参数
+		$data['format'] = "xml";
+		$data['v'] = "2.0";
+		$data['reqId'] = @date('Ymdhis');
+		$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
+		$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
+		$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
+		$data['outTradNo'] = $phone.time();
+		$data['subject'] = "pay for tickets";
+		$data['totalFee'] = $money;
+		//参数配置结束
+		
+		foreach($seats as $seat)
+			$this->seats->updateInfo($seat);
+		
+		//向订单表插入订单信息
+		$order['oid'] = $phone.time();
+		$order['phone'] = $phone;
+		$order['name'] = $name;
+		$order['sid'] = serialize($seats);
+		$order['state'] = 0;
+ 		$this->ticket->insertOrder($order);
+		//开始交易
+		$this->doTrade($data);
+	}
+	
+	//支付成功回调页面
+	public function callBack(){
+		/*支付成功返回页面
+			完成功能：更新订单状态（状态码：1）
+		*/
+		require_once("/var/www/ticket/phonepay/alipay.config.php");
+		require_once("/var/www/ticket/phonepay/lib/alipay_notify.class.php");
+		$this->load->model("ticket_model","ticket");
+		$alipayNotify = new AlipayNotify($alipay_config);
+		$verify_result = $alipayNotify->verifyReturn();
+		if(true) {
+			//更新订单状态
+			$out_trade_no = $_GET['out_trade_no'];
+			$reslut = $this->ticket->updateInfo($out_trade_no);
+			if($result){
+				echo "update successfunlly!";
+			}
+			}
+		else {
+			echo "验证失败";
+		}
+	}
 
-		//返回格式
-		$v = "2.0";
-		//必填，不需要修改
-
-		//请求号
-		$req_id = @date('Ymdhis');
-		//必填，须保证每次请求都是唯一
-
-		//**req_data详细信息**
-
-		//服务器异步通知页面路径
-		$notify_url = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
-		//需http://格式的完整路径，不允许加?id=123这类自定义参数
-
-		//页面跳转同步通知页面路径
-		$call_back_url = "http://shiyida.net:8080/ticket/index.php/welcome/call_back";
-		//需http://格式的完整路径，不允许加?id=123这类自定义参数
-
-		//操作中断返回地址
-		$merchant_url = "http://shiyida.net:8080/ticket/phonepay/out.php";
-		//用户付款中途退出返回商户的地址。需http://格式的完整路径，不允许加?id=123这类自定义参数
-
-		//商户订单号:手机号码+时间戳组成唯一订单号
-		$out_trade_no = $phone.time();
-		//商户网站订单系统中唯一订单号，必填
-
-		//订单名称：
-		$subject = "pay for tickets";
-		//必填
-
-		//付款金额
-		$total_fee = $money;
-		//必填
-
+	//根据授权码token调用交易接口alipay.wap.auth.authAndExecute
+	public function doTrade($data){
+		require_once("/var/www/ticket/phonepay/alipay.config.php");
+		require_once("/var/www/ticket/phonepay/lib/alipay_submit.class.php");
 		//请求业务参数详细
-		$req_data = '<direct_trade_create_req><notify_url>' . $notify_url . '</notify_url><call_back_url>' . $call_back_url . '</call_back_url><seller_account_name>' . trim($alipay_config['seller_email']) . '</seller_account_name><out_trade_no>' . $out_trade_no . '</out_trade_no><subject>' . $subject . '</subject><total_fee>' . $total_fee . '</total_fee><merchant_url>' . $merchant_url . '</merchant_url></direct_trade_create_req>';
+		$req_data = '<direct_trade_create_req><notify_url>' . $data['notifyUrl'] . '</notify_url><call_back_url>' . $data['callBackUrl'] . '</call_back_url><seller_account_name>' . trim($alipay_config['seller_email']) . '</seller_account_name><out_trade_no>' . $data['outTradNo'] . '</out_trade_no><subject>' . $data['subject'] . '</subject><total_fee>' . $data['totalFee'] . '</total_fee><merchant_url>' . $data['merchantUrl'] . '</merchant_url></direct_trade_create_req>';
 		//必填
 		/************************************************************/
 
@@ -118,13 +143,12 @@ class Welcome extends CI_Controller {
 				"service" => "alipay.wap.trade.create.direct",
 				"partner" => trim($alipay_config['partner']),
 				"sec_id" => trim($alipay_config['sign_type']),
-				"format"	=> $format,
-				"v"	=> $v,
-				"req_id"	=> $req_id,
+				"format"	=> $data['format'],
+				"v"	=> $data['v'],
+				"req_id"	=> $data['reqId'],
 				"req_data"	=> $req_data,
 				"_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
 		);
-
 		//建立请求
 		$alipaySubmit = new AlipaySubmit($alipay_config);
 		$html_text = $alipaySubmit->buildRequestHttp($para_token);
@@ -136,9 +160,6 @@ class Welcome extends CI_Controller {
 		$para_html_text = $alipaySubmit->parseResponse($html_text);
 		//获取request_token
 		$request_token = $para_html_text['request_token'];
-		//echo $request_token;
-		/**************************根据授权码token调用交易接口alipay.wap.auth.authAndExecute**************************/
-
 		//业务详细
 		$req_data = '<auth_and_execute_req><request_token>' . $request_token . '</request_token></auth_and_execute_req>';
 		//必填
@@ -148,9 +169,9 @@ class Welcome extends CI_Controller {
 				"service" => "alipay.wap.auth.authAndExecute",
 				"partner" => trim($alipay_config['partner']),
 				"sec_id" => trim($alipay_config['sign_type']),
-				"format"	=> $format,
-				"v"	=> $v,
-				"req_id"	=> $req_id,
+				"format"	=> $data['format'],
+				"v"	=> $data['v'],
+				"req_id"	=> $data['reqId'],
 				"req_data"	=> $req_data,
 				"_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
 		);

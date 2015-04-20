@@ -101,7 +101,7 @@ class AlipayNotify {
 			$isSign = $this->getSignVeryfy($_GET, $_GET["sign"],true);
 			
 			//写日志记录
-			if ($isSign) {
+			/* if ($isSign) {
 				$isSignStr = 'true';
 			}
 			else {
@@ -111,7 +111,7 @@ class AlipayNotify {
 			$log_text = $log_text.createLinkString($_GET);
 			logResult($log_text);
 			echo "log_text内容："."</br>";
-			echo $log_text."</br>";
+			echo $log_text."</br>"; */
 			
 			//验证
 			//$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关

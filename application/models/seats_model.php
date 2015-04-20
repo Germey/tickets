@@ -25,7 +25,7 @@
 		}
 		
 		//往数据库插入座位，仅供测试使用，危险！
-		private function addSeats(){
+		public function addSeats(){
 			$count=0;
 			for($i=1;$i<=20;$i++){
 				for($j=1;$j<=25;$j++){
@@ -39,5 +39,10 @@
 					echo "第".$count."条,录入".$result==0?"失败":"成功";
 				}
 			}
+		}
+		public function updateInfo($seat){
+			$sql = "update seats set state = 1 where sid = $seat";
+			$result = $this->db->query($sql);
+			return $result;
 		}
 	}
