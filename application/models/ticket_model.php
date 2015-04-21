@@ -17,13 +17,27 @@
 		
 		//查询已买的票的信息
 		public function findInfo($phone){
-			$sql = "SELECT * FROM orders,seats WHERE phone = ? and orders.sid = seats.sid";
-			$result = $this->db->query($sql,array($phone));
-			return $result->result_array();
+			$result;
+			$i = 0;
+			$sidSql = "select sid from orders where phone = '$phone'";
+			$sidResult = $this->db->query($sidSql);
+			foreach($sidResult->result_array() as $sidItem){
+				$sids = unserialize($sidItem['sid']);
+				while(isset($sids[$i])){
+					$seatSql = "select * from seats where sid = ".$sids[$i];
+					$seatResult = $this->db->query($seatSql);
+					$seatResult = $seatResult->result_array();
+					$result[$i] = $seatResult;
+					$i++;
+				}
+			}
+			return $result;
 		}
 		//购票成功。更新订单信息
 		public function updateInfo($trade_no){
-			$sql = "update orders set state = 1 where ";
+			$sql = "update orders set state = 1 where oid = '$trade_no'";
+			$result = mysql_query($sql);
+			return  $result;
 		}
 		//插入订单信息
 		public function insertOrder($order){

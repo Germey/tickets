@@ -101,7 +101,7 @@ class AlipayNotify {
 			$isSign = $this->getSignVeryfy($_GET, $_GET["sign"],true);
 			
 			//写日志记录
-			/* if ($isSign) {
+		/* 	if ($isSign) {
 				$isSignStr = 'true';
 			}
 			else {
@@ -109,9 +109,9 @@ class AlipayNotify {
 			}
 			$log_text = "return_url_log:isSign=".$isSignStr.",";
 			$log_text = $log_text.createLinkString($_GET);
-			logResult($log_text);
+			//logResult($log_text);
 			echo "log_text内容："."</br>";
-			echo $log_text."</br>"; */
+			echo $log_text."</br>" */; 
 			
 			//验证
 			//$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
@@ -155,8 +155,9 @@ class AlipayNotify {
      */
 	function getSignVeryfy($para_temp, $sign, $isSort) {
 		//除去待签名参数数组中的空值和签名参数
-		/* var_dump($para_temp);
-		echo "</br>"; */
+		/* echo "排序前"."</br>";
+		var_dump($para_temp);
+		echo "</br>";  */
 		$para = paraFilter($para_temp);
 		/* echo "sign内容："."</br>";
 		echo $sign."</br>"; */
@@ -169,8 +170,9 @@ class AlipayNotify {
 		
 		//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 		$prestr = createLinkstring($para);
-		/* var_dump($prestr);
-		echo "</br>"; */
+		/* echo "排序后："."</br>";
+		var_dump($prestr);
+		echo "</br>";  */
 		$isSgin = false;
 		switch (strtoupper(trim($this->alipay_config['sign_type']))) {
 			case "MD5" :
@@ -211,7 +213,9 @@ class AlipayNotify {
 		}
 		$veryfy_url = $veryfy_url."partner=" . $partner . "&notify_id=" . $notify_id;
 		$responseTxt = getHttpResponseGET($veryfy_url, $this->alipay_config['cacert']);
-		
+		/* echo "responseTxt内容："."</br>";
+		var_dump(responseTxt);
+		echo "</br>"; */
 		return $responseTxt;
 	}
 }

@@ -18,6 +18,8 @@ class Welcome extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->helper("url");
+		$this->load->model("seats_model","seats");
+		$this->load->model("ticket_model","ticket");
 		
 	}
 	//加载主界面
@@ -52,33 +54,38 @@ class Welcome extends CI_Controller {
 		$info['seatsInfo'] = $seatsInfo;
 		$this->load->view('seats',$info);
 	}
-	
 	//往数据库插入座位接口，危险！仅供测试！
-	public function addseats(){
-		$this->load->model("seats_model","seats");
+	private function addseats(){
+		
 		$this->seats->addSeats();
 	}
 	//查询买到的票的信息
 	public function findInfo(){
-		$phone = $_POST['phone'];
-		$this->load->model("ticket_model","ticket");
+		//$phone = $_POST['phone'];
+		$phone = $_GET['phone'];
 		$result = $this->ticket->findInfo($phone);
-		echo json_encode($result);
+		$i = 0;
+		while(isset($result[$i])){
+			echo json_encode($result[$i]);
+			$i++;
+		}
 	} 
-	
 	public function getSeats(){
 		/*下单页面
 			完成功能：
 			1.更新seats表相应座位的state(状态码：1)
 			2.向订单表插入订单信息
 		*/
-
-		$this->load->model("seats_model","seats");
-		$this->load->model("ticket_model","ticket");
 		$seats = @$_POST['seats'];
 		$phone = $_POST['phone'];
 		$name = $_POST['name'];
-		$money = $_POST['money'];
+		
+		if(!($this->judgeSeat($seats))){
+			echo "订单不合法！请重新选择！";
+			return;
+		}
+		//得到支付总额；
+		$money = $this->getTotalFee($seats);
 		
 		//获取token需要的各种参数
 		$data['format'] = "xml";
@@ -91,7 +98,7 @@ class Welcome extends CI_Controller {
 		$data['subject'] = "pay for tickets";
 		$data['totalFee'] = $money;
 		//参数配置结束
-		
+		//更新座位表信息；锁定已被订购座位
 		foreach($seats as $seat)
 			$this->seats->updateInfo($seat);
 		
@@ -113,17 +120,18 @@ class Welcome extends CI_Controller {
 		*/
 		require_once("/var/www/ticket/phonepay/alipay.config.php");
 		require_once("/var/www/ticket/phonepay/lib/alipay_notify.class.php");
-		$this->load->model("ticket_model","ticket");
+		
 		$alipayNotify = new AlipayNotify($alipay_config);
 		$verify_result = $alipayNotify->verifyReturn();
-		if(true) {
+		if($verify_result) {
 			//更新订单状态
 			$out_trade_no = $_GET['out_trade_no'];
-			$reslut = $this->ticket->updateInfo($out_trade_no);
+			$result = $this->ticket->updateInfo($out_trade_no);
 			if($result){
 				echo "update successfunlly!";
-			}
-			}
+			} 
+			echo "验证成功！";
+		}
 		else {
 			echo "验证失败";
 		}
@@ -179,5 +187,23 @@ class Welcome extends CI_Controller {
 		$alipaySubmit = new AlipaySubmit($alipay_config);
 		$html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
 		echo $html_text;
+	}
+
+	private function getTotalFee($seats){
+		$totalFee = $this->seats->getTotalFee($seats);
+		return $totalFee;
+	}
+	private function judgeSeat($seats){
+		$result = $this->seats->judgeSeat($seats);
+		return $result;
+	}
+	//各种测试....
+	public function test(){
+		$test[0] = "hello";
+		$test[1] = "world";
+		$after = serialize($test);
+		echo $after."</br>";
+		var_dump(unserialize($after));
+		
 	}
 }

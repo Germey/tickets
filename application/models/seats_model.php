@@ -20,12 +20,13 @@
 		public function getSeatsInfo(){
 			//插入数据
 			$sql = "select * from seats";
+			
 			$result = $this->db->query($sql);
 			return $result->result_array();
 		}
 		
 		//往数据库插入座位，仅供测试使用，危险！
-		public function addSeats(){
+		private function addSeats(){
 			$count=0;
 			for($i=1;$i<=20;$i++){
 				for($j=1;$j<=25;$j++){
@@ -40,9 +41,47 @@
 				}
 			}
 		}
+		//更新座位信息，用户下单后，该座位被锁定
 		public function updateInfo($seat){
 			$sql = "update seats set state = 1 where sid = $seat";
 			$result = $this->db->query($sql);
+			return $result;
+		}
+		public function getTotalFee($seats){
+			$totalFee = 0;
+			$sql = "select rank from seats where sid = ";
+			foreach($seats as $seat){
+				$priceSql = $sql.$seat;
+				$result = mysql_query($priceSql);
+				while($rank = mysql_fetch_array($result)){
+					switch($rank['rank']){
+					case 1:
+						$totalFee += 0.01;
+						break;
+					case 2:
+						$totalFee += 0.01;
+						break;
+					case 3:
+						$totalFee += 0.01;
+						break;
+					}
+				}
+			}
+			return $totalFee;
+		}
+		public function judgeSeat($seats){
+			$result = true;
+			$sql = "select state from seats where sid = ";
+			foreach($seats as $seat){
+				$stateSql = $sql.$seat; 
+				$result = mysql_query($stateSql);
+				while($state = mysql_fetch_array($result)){
+					if($state['state'] == 1){
+						$result = false;
+						return $result;
+					}
+				}
+			}
 			return $result;
 		}
 	}
