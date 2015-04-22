@@ -7,6 +7,8 @@
 		<script src="<?php echo base_url();?>js/jquery.validate.js"></script>
 		<!-- validate zh-CN -->
 		<script src="<?php echo base_url();?>js/jquery.validate.messages_cn.js"></script>
+		<!-- modal -->
+		<script src="<?php echo base_url();?>js/bootstrap-modal.js"></script>
 		<script>
 		function getDelePic(){
 			return '<?php echo base_url();?>images/delete.png';

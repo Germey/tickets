@@ -79,7 +79,7 @@ $(function(){
 		$(".groups:visible").hide();
 		$(this).hide();
 	});
-	$("#buy-form").validate({
+	/*$("#buy-form").validate({
 		submitHandler:function(form){ 
 			form.submit();
 		},
@@ -107,6 +107,57 @@ $(function(){
 			label.html("<img src="+getRightPic()+">");
 		}
 	});
+	*/
+	/* buy-form validate */
+	$("#buy-form #sub").click(function(){
+		function checkPhone(value){
+			if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
+				return false;
+			 }else{
+				return true;
+			}
+		}
+		function checkName(value){     
+			var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/);      
+			if(!containSpecial.test(value)&&value.length>=2){
+				return true;
+			}else{
+				return false;
+			}      
+		}
+		function checkTicket(){
+			if($('#buy-form input[type="hidden"]').size()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		var phone = $("#buy-form #phone").val();
+		phoneResult = checkPhone(phone);
+		if(!phoneResult){
+			$("#buy-form #phone").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+		}else{
+			$("#buy-form #phone").parent().next().children(".label").html("<img src="+getRightPic()+">");
+		}
+		var name = $("#buy-form #name").val();
+		nameResult = checkName(name);
+		if(!nameResult){
+			$("#buy-form #name").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+		}else{
+			$("#buy-form #name").parent().next().children(".label").html("<img src="+getRightPic()+">");
+		}
+		ticketResult = checkTicket();
+		if(!ticketResult){
+			$("#mymodal").modal("show");
+			$("#mymodal button").click(function(){
+				$("#mymodal").modal("hide");
+			});
+		}
+		if(phoneResult&&nameResult&&ticketResult){
+			$("#buy-form").submit();
+		}
+	});
+	/* find-form validate */
 	$("#find-form").validate({
 		debug:true,
 		rules:{
@@ -132,7 +183,7 @@ $(function(){
 				res = JSON.parse(data);
 				$("#find-result ul li").remove();
 				$.each(res,function(index,info){
-					$("#find-result ul").append("<li>座号"+info['sid']+" "+info['row']+"排"+info['col']+"列</li>");
+					$("#find-result #not-bought ul").append("<li>座号"+info['sid']+" "+info['row']+"排"+info['col']+"列</li>");
 				});
 				if(res.length==0){
 					$("#find-result").append('<p class="none-result">没有相关信息</p>')

@@ -150,7 +150,7 @@
 						</div>
 						<input type="text" name="money" hidden="true" value="0.01"> 
 						<div id="total-money"><span>¥ <span><span id="price">0.00</span></div>
-						<input type="submit" class="btn btn-primary button" value="去支付" name="sub" id="sub">
+						<input type="button" class="btn btn-primary button" value="去支付" name="sub" id="sub">
 					</form>
 				</div>
 				<div class="col-sm-6 col-xs-12">
@@ -167,12 +167,36 @@
 						<input type="submit" class="btn btn-primary button" id="find-button" value="查询">
 					</form>
 					<div id="find-result">
-						<ul>
-						</ul>
+						<div id="bought">
+							<ul>
+							</ul>
+						</div>
+						<div id="not-bought">
+							<ul>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- 提示框 -->
+	<div class="modal" id="mymodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+					<p>请至少选择一个座位</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary">确定</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 提示框结束 -->
 </div>
 <!-- 座位结束 -->

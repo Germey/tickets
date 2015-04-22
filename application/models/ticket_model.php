@@ -17,20 +17,33 @@
 		
 		//查询已买的票的信息
 		public function findInfo($phone){
-			$result;
+			$result = array();
+			$bought = array();
+			$nbought = array();
+			$bi = 0;
+			$ni = 0;
 			$i = 0;
-			$sidSql = "select sid from orders where phone = '$phone'";
+			$sidSql = "select * from orders where phone = '$phone'";
 			$sidResult = $this->db->query($sidSql);
 			foreach($sidResult->result_array() as $sidItem){
 				$sids = unserialize($sidItem['sid']);
+				$state = $sidItem['state'];
 				while(isset($sids[$i])){
 					$seatSql = "select * from seats where sid = ".$sids[$i];
 					$seatResult = $this->db->query($seatSql);
 					$seatResult = $seatResult->result_array();
-					$result[$i] = $seatResult[0];
+					if($state==1){
+						$bought[$bi] = $seatResult[0];
+						$bi++;
+					}else if($state==0){
+						$nbought[$ni] = $seatResult[0];
+						$ni++;
+					}
 					$i++;
 				}
 			}
+			$result[0] = $bought;
+			$result[1] = $nbought;
 			return $result;
 		}
 		//购票成功。更新订单信息
