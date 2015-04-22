@@ -44,7 +44,7 @@
 		<?php 
 			for($i=1;$i<=$row1;$i++){
 				for($j=1;$j<=$col1;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" sid="<?php echo ($i-1)*$colSum+$j;?>" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo in_array((($i-1)*$colSum+$j),$seatsUnUse)?1:0;?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==7){?>
 					<div class="clear"></div>
 					<?php } 
@@ -56,7 +56,7 @@
 		<?php 
 			for($i=1;$i<=$row1;$i++){
 				for($j=$col1+1;$j<=$col1+$col2;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" sid="<?php echo ($i-1)*$colSum+$j;?>" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo in_array((($i-1)*$colSum+$j),$seatsUnUse)?1:0;?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==18){?>
 					<div class="clear"></div>
 					<?php }
@@ -68,7 +68,7 @@
 		<?php 
 			for($i=1;$i<=$row1;$i++){
 				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" sid="<?php echo ($i-1)*$colSum+$j;?>" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo in_array((($i-1)*$colSum+$j),$seatsUnUse)?1:0;?>"  row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==25){?>
 					<div class="clear"></div>
 					<?php } 
@@ -80,7 +80,7 @@
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=1;$j<=$col1;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" sid="<?php echo ($i-1)*$colSum+$j;?>" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo in_array((($i-1)*$colSum+$j),$seatsUnUse)?1:0;?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==7){?>
 					<div class="clear"></div>
 					<?php } 
@@ -92,7 +92,7 @@
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=$col1+1;$j<=$col1+$col2;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" sid="<?php echo ($i-1)*$colSum+$j;?>" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo in_array((($i-1)*$colSum+$j),$seatsUnUse)?1:0;?>"  row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==18){?>
 					<div class="clear"></div>
 					<?php } 
@@ -104,7 +104,7 @@
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
-					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['state'];?>" row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
+					<div id="seat-<?php echo $i;?>-<?php echo $j;?>" select="0" sid="<?php echo ($i-1)*$colSum+$j;?>" rank="<?php echo $seatsInfo[($i-1)*$colSum+$j-1]['rank'];?>" state="<?php echo in_array((($i-1)*$colSum+$j),$seatsUnUse)?1:0;?>"  row="<?php echo $i;?>" col="<?php echo $j;?>" class="seat-item"><i class="fa fa-user"></i></div>	
 					<?php if($j==25){?>
 					<div class="clear"></div>
 					<?php } 

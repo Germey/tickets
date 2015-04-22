@@ -47,29 +47,37 @@ class Welcome extends CI_Controller {
 		$this->load->view('coupon');
 	}
 	
+	//获得不可用的座位信息
+	public function getUnUseSeats(){
+		$this->load->model("seats_model","seats");
+		
+	}
+	
 	//获得座位信息
 	public function loadSeats(){
 		$this->load->model("seats_model","seats");
 		$seatsInfo = $this->seats->getSeatsInfo();
+		$seatsUnUse = $this->seats->getUnUseSeats();
 		$info['seatsInfo'] = $seatsInfo;
+		$info['seatsUnUse'] = $seatsUnUse;
 		$this->load->view('seats',$info);
 	}
+	
 	//往数据库插入座位接口，危险！仅供测试！
 	private function addseats(){
 		
 		$this->seats->addSeats();
 	}
+	
 	//查询买到的票的信息
 	public function findInfo(){
 		//$phone = $_POST['phone'];
-		$phone = $_GET['phone'];
+		$phone = $_POST['phone'];
 		$result = $this->ticket->findInfo($phone);
-		$i = 0;
-		while(isset($result[$i])){
-			echo json_encode($result[$i]);
-			$i++;
-		}
+		echo json_encode($result);
 	} 
+	
+	//提交订单
 	public function getSeats(){
 		/*下单页面
 			完成功能：

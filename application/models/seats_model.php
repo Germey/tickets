@@ -20,10 +20,52 @@
 		public function getSeatsInfo(){
 			//插入数据
 			$sql = "select * from seats";
-			
 			$result = $this->db->query($sql);
 			return $result->result_array();
 		}
+		
+		//获取不可选的座位信息
+		public function getUnUseSeats(){
+			$seatsSaled = $this->getSeatsSaled();
+			$sql = "select * from orders";
+			$result = $this->db->query($sql);
+			//从订单表中获取到的当前不可选的座位代号
+			$sidOrderd = [];
+			$i = 0;
+			foreach($result->result_array() as $item){
+				$failTime = $item['fail_time'];
+				$state = $item['state'];
+				$sids = unserialize($item['sid']);
+				//如果订单支付成功，或者支付未成功但是订单还未过期
+				if($state==1||$state==0&&time()<$failTime){
+					foreach($sids as $sid){
+						$sidOrderd[$i] = $sid;
+						$i++;
+					}
+				}
+			}
+			foreach($sidOrderd as $sid){
+				if(!in_array($sid,$seatsSaled)){
+					$seatsSaled[count($seatsSaled)] = $sid;
+				}
+			}
+			//返回不可选的座位信息
+			return $seatsSaled;
+		}
+		
+		//从seats表中获取已经购买的座位信息
+		public function getSeatsSaled(){
+			$sidSql = "select sid from seats where state = 1";
+			$result = $this->db->query($sidSql)->result_array();
+			$res = [];
+			$i = 0;
+			foreach($result as $item){
+				$res[$i] = $item['sid'];
+				$i++;
+			}
+			return $res;
+		}
+		
 		
 		//往数据库插入座位，仅供测试使用，危险！
 		private function addSeats(){
@@ -41,12 +83,15 @@
 				}
 			}
 		}
+		
 		//更新座位信息，用户下单后，该座位被锁定
 		public function updateInfo($seat){
 			$sql = "update seats set state = 1 where sid = $seat";
 			$result = $this->db->query($sql);
 			return $result;
 		}
+		
+		//获得座位总价
 		public function getTotalFee($seats){
 			$totalFee = 0;
 			$sql = "select rank from seats where sid = ";
@@ -69,6 +114,7 @@
 			}
 			return $totalFee;
 		}
+		
 		public function judgeSeat($seats){
 			$result = true;
 			$sql = "select state from seats where sid = ";

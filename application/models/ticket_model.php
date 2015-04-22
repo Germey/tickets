@@ -27,7 +27,7 @@
 					$seatSql = "select * from seats where sid = ".$sids[$i];
 					$seatResult = $this->db->query($seatSql);
 					$seatResult = $seatResult->result_array();
-					$result[$i] = $seatResult;
+					$result[$i] = $seatResult[0];
 					$i++;
 				}
 			}
