@@ -30,7 +30,7 @@
 			$sql = "select * from orders";
 			$result = $this->db->query($sql);
 			//从订单表中获取到的当前不可选的座位代号
-			$sidOrderd = [];
+			$sidOrderd = array();
 			$i = 0;
 			foreach($result->result_array() as $item){
 				$failTime = $item['fail_time'];
@@ -57,7 +57,7 @@
 		public function getSeatsSaled(){
 			$sidSql = "select sid from seats where state = 1";
 			$result = $this->db->query($sidSql)->result_array();
-			$res = [];
+			$res = array();
 			$i = 0;
 			foreach($result as $item){
 				$res[$i] = $item['sid'];
