@@ -218,6 +218,19 @@ body{
 	max-width:300px;
 	margin:20px auto;
 }
+#seats #personal-info #buy-again-form{
+	max-width:300px;
+}
+#seats #personal-info #again-button{
+	width:300px;
+	position: relative;
+	left: 10px;
+	margin: 20px 0px 10px 0px;
+}
+#seats #buy-again-form ul{
+	position: relative;
+	left: -40px;
+}
 #seats #personal-info .button{
 	width:100%;
 	margin:10px auto;

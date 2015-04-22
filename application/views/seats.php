@@ -167,14 +167,21 @@
 						<input type="submit" class="btn btn-primary button" id="find-button" value="查询">
 					</form>
 					<div id="find-result">
+						<ul></ul>
 						<div id="bought">
+							<p></p>
 							<ul>
 							</ul>
 						</div>
-						<div id="not-bought">
-							<ul>
-							</ul>
-						</div>
+						<form id="buy-again-form" action="<?php echo base_url();?>index.php/welcome/getSeats" method="post">
+							<input type="hidden" class="form-control text"  name="phone" id="phone">
+							<div id="not-bought">
+								<p></p>
+								<ul>
+								</ul>
+								<input type="submit" class="btn btn-primary button" id="again-button" style="display:none" value="再次购买">
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

@@ -23,7 +23,8 @@
 			$bi = 0;
 			$ni = 0;
 			$i = 0;
-			$sidSql = "select * from orders where phone = '$phone'";
+			$time = time();
+			$sidSql = "select * from orders where phone = '$phone' and ((fail_time > $time and state = 0) or state=1)";
 			$sidResult = $this->db->query($sidSql);
 			foreach($sidResult->result_array() as $sidItem){
 				$sids = unserialize($sidItem['sid']);

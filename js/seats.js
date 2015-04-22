@@ -179,11 +179,24 @@ $(function(){
 			$.post(getFindUrl(),
 			{"phone":$("#find-form #phone").val()},
 			function(data){
-				$("#find-result").html("<ul></ul>").prepend("<p>购票信息如下</p>");
+				$("#find-result #bought p").html("已支付");
+				$("#find-result #not-bought p").html("未支付");
 				res = JSON.parse(data);
 				$("#find-result ul li").remove();
 				$.each(res,function(index,info){
-					$("#find-result #not-bought ul").append("<li>座号"+info['sid']+" "+info['row']+"排"+info['col']+"列</li>");
+					if(index==0){
+						$.each(info,function(i,content){
+							$("#find-result #bought ul").append('<li>'+content["sid"]+'排'+content['col']+'列</li>');
+						});
+					}else if(index==1){
+						$.each(info,function(i,content){
+							$("#find-result #not-bought ul").append('<li>'+content["sid"]+'排'+content['col']+'列</li>');
+							$("#buy-again-form").append('<input type="hidden" id="hidden-'+content['row']+'-'+content["col"]+'" value="'+content["sid"]+'" name="seats[]">');
+						});
+						if(info.length>=0){
+							$("#again-button").show();
+						}
+					}
 				});
 				if(res.length==0){
 					$("#find-result").append('<p class="none-result">没有相关信息</p>')
