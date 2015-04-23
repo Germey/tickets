@@ -35,7 +35,7 @@
       -webkit-margin-after: 0.67em;
       -webkit-margin-start: 0px;
       -webkit-margin-end: 0px;
-       font-size: 2.5em;
+       font-size: 2.2em;
   }
   a{
     color: #fff;
@@ -47,7 +47,7 @@
       -webkit-margin-after: 1em;
       -webkit-margin-start: 0px;
       -webkit-margin-end: 0px;
-      font-size: 1.5em;
+      font-size: 1.2em;
   }
   .btn{
       padding: 10px 20px;

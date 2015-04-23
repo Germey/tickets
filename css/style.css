@@ -240,7 +240,16 @@ body{
 	text-align:center;
 	color:#FFF;
 	margin:0px auto;
-	padding: 20px;
+	padding: 0px 20px;
+}
+#seats #find-result{
+	position:relative;
+	left:-10px;
+}
+#seats #again-group .form-item{
+	position: relative;
+	left: 10px;
+	top: 5px;
 }
 #seats #personal-info .find-ticket{
 	max-width:300px;
@@ -293,9 +302,21 @@ body{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-#seats #find-result .none-result{
-	width:100%;
+#seats #not-bought .none-result{
+	position:relative;
+	left:-20px;
 }
+#seats #find-result .none-result{
+	margin: 20px auto;
+	width: 100%;
+	padding: 5px 10px;
+	background-color: #B8B128;
+	width: 300px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
 /* 底部版权 */
 .foot{
 	text-align:center;

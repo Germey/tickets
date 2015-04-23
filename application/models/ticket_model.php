@@ -22,15 +22,14 @@
 			$nbought = array();
 			$bi = 0;
 			$ni = 0;
-			$i = 0;
 			$time = time();
 			$sidSql = "select * from orders where phone = '$phone' and ((fail_time > $time and state = 0) or state=1)";
 			$sidResult = $this->db->query($sidSql);
 			foreach($sidResult->result_array() as $sidItem){
 				$sids = unserialize($sidItem['sid']);
 				$state = $sidItem['state'];
-				while(isset($sids[$i])){
-					$seatSql = "select * from seats where sid = ".$sids[$i];
+				foreach($sids as $sid){
+					$seatSql = "select * from seats where sid = ".$sid;
 					$seatResult = $this->db->query($seatSql);
 					$seatResult = $seatResult->result_array();
 					if($state==1){
@@ -40,7 +39,6 @@
 						$nbought[$ni] = $seatResult[0];
 						$ni++;
 					}
-					$i++;
 				}
 			}
 			$result[0] = $bought;

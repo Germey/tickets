@@ -142,7 +142,7 @@
 						</div>
 						<div class="form-item">
 							<div class="form-input">
-								<input type="text" class="form-control text" placeholder="姓名" name="name" id="name">
+								<input type="text" class="form-control text" placeholder="预留姓名" name="name" id="name">
 							</div>
 							<div class="form-label">
 								<div class="label"></div>
@@ -179,7 +179,17 @@
 								<p></p>
 								<ul>
 								</ul>
-								<input type="submit" class="btn btn-primary button" id="again-button" style="display:none" value="再次购买">
+								<div id="again-group" style="display:none">
+									<div class="form-item">
+										<div class="form-input">
+											<input type="text" class="form-control text" placeholder="预留姓名" name="name" id="name">
+										</div>
+										<div class="form-label">
+											<div class="label"></div>
+										</div>
+									</div>
+									<input type="button" class="btn btn-primary button" id="again-button"  value="重新支付">
+								</div>
 							</div>
 						</form>
 					</div>

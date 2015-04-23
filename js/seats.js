@@ -1,6 +1,7 @@
 $(function(){
 	var colNum = 25;
 	var money = 0;
+	var findPhone = "";
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
@@ -149,6 +150,7 @@ $(function(){
 		ticketResult = checkTicket();
 		if(!ticketResult){
 			$("#mymodal").modal("show");
+			$("#mymodal .modal-body p").html("请至少选择一个座位");
 			$("#mymodal button").click(function(){
 				$("#mymodal").modal("hide");
 			});
@@ -176,32 +178,86 @@ $(function(){
 		},
 		success:function(label){
 			label.html("<img src="+getRightPic()+">");
+			$("#find-button").val("查询中请稍后");
 			$.post(getFindUrl(),
 			{"phone":$("#find-form #phone").val()},
 			function(data){
 				$("#find-result #bought p").html("已支付");
 				$("#find-result #not-bought p").html("未支付");
+				findPhone = $("#find-form #phone").val();
+				$("#buy-again-form #phone").val($("#find-form #phone").val());
+				$("#find-button").val("查询");
 				res = JSON.parse(data);
 				$("#find-result ul li").remove();
 				$.each(res,function(index,info){
 					if(index==0){
 						$.each(info,function(i,content){
-							$("#find-result #bought ul").append('<li>'+content["sid"]+'排'+content['col']+'列</li>');
+							$("#find-result #bought ul").append('<li>'+content["row"]+'排'+content['col']+'列</li>');
 						});
+						if(info.length==0){
+							$("#find-result #bought p").append('<p class="none-result">没有相关信息</p>')
+						}
 					}else if(index==1){
 						$.each(info,function(i,content){
-							$("#find-result #not-bought ul").append('<li>'+content["sid"]+'排'+content['col']+'列</li>');
+							$("#find-result #not-bought ul").append('<li>'+content["row"]+'排'+content['col']+'列</li>');
 							$("#buy-again-form").append('<input type="hidden" id="hidden-'+content['row']+'-'+content["col"]+'" value="'+content["sid"]+'" name="seats[]">');
 						});
-						if(info.length>=0){
-							$("#again-button").show();
+						if(info.length>0){
+							$("#again-group").show();
+						}
+						if(info.length==0){
+							$("#find-result #not-bought p").append('<p class="none-result">没有相关信息</p>')
 						}
 					}
 				});
-				if(res.length==0){
-					$("#find-result").append('<p class="none-result">没有相关信息</p>')
-				}
 			});
+		}
+	});
+	/* end of find-form validate */
+	/* buy-form validate */
+	$("#buy-again-form #again-button").click(function(){
+		function checkPhone(value){
+			if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
+				return false;
+			 }else{
+				return true;
+			}
+		}
+		function checkName(value){     
+			var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/);      
+			if(!containSpecial.test(value)&&value.length>=2){
+				return true;
+			}else{
+				return false;
+			}      
+		}
+		var phone = $("#buy-again-form #phone").val();
+		/* if user change the form input by Browser */
+		phoneResult = checkPhone(phone);
+		/* if user change his phone by the input */
+		checkPhoneChange = phone==findPhone;
+		if(!phoneResult){
+			$("#mymodal").modal("show");
+			$("#mymodal .modal-body p").html("请输入正确的手机号");
+			$("#mymodal button").click(function(){
+				$("#mymodal").modal("hide");
+			});
+		}else if(!checkPhoneChange){
+			$("#mymodal").modal("show");
+			$("#mymodal .modal-body p").html("请不要更改手机号");
+			$("#mymodal button").click(function(){
+				$("#mymodal").modal("hide");
+			});
+		}
+		var name = $("#buy-again-form #name").val();
+		nameResult = checkName(name);
+		if(!nameResult){
+			$("#buy-again-form #name").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+		}else{
+			$("#buy-again-form #name").parent().next().children(".label").html("<img src="+getRightPic()+">");
+		}
+		if(nameResult&&phoneResult){
+			$("#buy-again-form").submit();
 		}
 	});
 });
