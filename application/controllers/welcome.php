@@ -138,10 +138,12 @@ class Welcome extends CI_Controller {
 			if($result){
 				echo "update successfunlly!";
 			} 
-			echo "验证成功！";
+			//echo "验证成功！";
+			$this->load->view('success');
 		}
 		else {
-			echo "验证失败";
+			//echo "验证失败";
+			$this->load->view('fail');
 		}
 	}
 
