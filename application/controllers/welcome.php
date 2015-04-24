@@ -78,7 +78,7 @@ class Welcome extends CI_Controller {
 	} 
 	
 	//提交订单
-	public function getSeats(){
+	public function pay(){
 		/*下单页面
 			完成功能：
 			1.更新seats表相应座位的state(状态码：1)

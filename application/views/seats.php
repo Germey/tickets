@@ -130,7 +130,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-xs-12">
-					<form id="buy-form" action="<?php echo base_url();?>index.php/welcome/getSeats" method="post">
+					<form id="buy-form" action="<?php echo base_url();?>index.php/welcome/pay" method="post">
 						<p>未购票者入口</p>
 						<div class="form-item">
 							<div class="form-input">
@@ -173,7 +173,7 @@
 							<ul>
 							</ul>
 						</div>
-						<form id="buy-again-form" action="<?php echo base_url();?>index.php/welcome/getSeats" method="post">
+						<form id="buy-again-form" action="<?php echo base_url();?>index.php/welcome/payAgain" method="post">
 							<input type="hidden" class="form-control text"  name="phone" id="phone">
 							<div id="not-bought">
 								<p></p>
