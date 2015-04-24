@@ -84,11 +84,20 @@
 			}
 		}
 		
-		//更新座位信息，用户下单后，该座位被锁定
-		public function updateInfo($seat){
-			$sql = "update seats set state = 1 where sid = $seat";
-			$result = $this->db->query($sql);
-			return $result;
+		//更新座位信息，支付成功后,座位被锁定,不可售
+		public function updateInfo($oid){
+			$seatSql = "select sid from orders where oid = '$oid'";
+			$seatResult = $this->db->query($seatSql);
+			$seats;
+			foreach($seatResult->result_array() as $seatItem){
+				$seats = unserialize($seatItem['sid']);				
+			}
+			$sql = "update seats set state = 1 where sid = ";
+			$count = count($seats);
+			for($i=0;$i<$count;$i++){
+				$updateSql = $sql.$seats[$i];
+				$this->db->query($updateSql);
+			}
 		}
 		
 		//获得座位总价

@@ -7,7 +7,7 @@ $(function(){
 			$(this).css("background-color","#888");
 		}
 	});
-	$(".seat-item").click(function(){
+	$(".seat-item").on("touchend click",function(){
 		if($(this).attr("state")==0){
 			if($(this).attr("select")==0){
 				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("col")+"座 ¥"+getSeatPrice($(this).attr("rank"))+'<span><img src='+getDelePic()+'></span></li>');

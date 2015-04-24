@@ -106,16 +106,16 @@ class Welcome extends CI_Controller {
 		$data['subject'] = "pay for tickets";
 		$data['totalFee'] = $money;
 		//参数配置结束
-		//更新座位表信息；锁定已被订购座位
-		foreach($seats as $seat)
-			$this->seats->updateInfo($seat);
 		
 		//向订单表插入订单信息
 		$order['oid'] = $phone.time();
 		$order['phone'] = $phone;
 		$order['name'] = $name;
+		$order['money'] = $money;
 		$order['sid'] = serialize($seats);
 		$order['state'] = 0;
+		//订单失效时间
+		$order['failTime'] = time()+60*45;
  		$this->ticket->insertOrder($order);
 		//开始交易
 		$this->doTrade($data);
@@ -125,6 +125,7 @@ class Welcome extends CI_Controller {
 	public function callBack(){
 		/*支付成功返回页面
 			完成功能：更新订单状态（状态码：1）
+					 更新座位表状态(状态码:1)
 		*/
 		require_once("/var/www/ticket/phonepay/alipay.config.php");
 		require_once("/var/www/ticket/phonepay/lib/alipay_notify.class.php");
@@ -132,17 +133,15 @@ class Welcome extends CI_Controller {
 		$alipayNotify = new AlipayNotify($alipay_config);
 		$verify_result = $alipayNotify->verifyReturn();
 		if($verify_result) {
-			//更新订单状态
+			//更新订单状态,支付成功
 			$out_trade_no = $_GET['out_trade_no'];
-			$result = $this->ticket->updateInfo($out_trade_no);
-			if($result){
-				echo "update successfunlly!";
-			} 
-			//echo "验证成功！";
+			$this->ticket->updateInfo($out_trade_no);
+			//更新座位表信息；锁定已被订购座位
+			$this->seats->updateInfo($out_trade_no);
+			
 			$this->load->view('success');
 		}
 		else {
-			//echo "验证失败";
 			$this->load->view('fail');
 		}
 	}
@@ -198,7 +197,31 @@ class Welcome extends CI_Controller {
 		$html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
 		echo $html_text;
 	}
-
+	//支付失败重新支付页面
+	private function payAgain(){
+		$order = $_POST['oid'];
+		echo $order;
+		//判断是否合法
+		$orderMoney = $this->ticket->getMoney($order);
+		if($orderMoney){
+			//获取token需要的各种参数
+			$data['format'] = "xml";
+			$data['v'] = "2.0";
+			$data['reqId'] = @date('Ymdhis');
+			$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
+			$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
+			$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
+			$data['outTradNo'] = $order;
+			$data['subject'] = "pay for tickets";
+			$data['totalFee'] = $orderMoney;
+			//$this->doTrade($data);
+		}
+		else{
+			echo "请求错误!";
+			return;
+		}
+		
+	}
 	private function getTotalFee($seats){
 		$totalFee = $this->seats->getTotalFee($seats);
 		return $totalFee;
@@ -214,6 +237,6 @@ class Welcome extends CI_Controller {
 		$after = serialize($test);
 		echo $after."</br>";
 		var_dump(unserialize($after));
-		
+		echo $test.count();
 	}
 }
