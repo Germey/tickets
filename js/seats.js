@@ -7,7 +7,7 @@ $(function(){
 			$(this).css("background-color","#888");
 		}
 	});
-	$(".seat-item").on("touchend click",function(){
+	function seat_item_click(){
 		if($(this).attr("state")==0){
 			if($(this).attr("select")==0){
 				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("col")+"座 ¥"+getSeatPrice($(this).attr("rank"))+'<span><img src='+getDelePic()+'></span></li>');
@@ -51,9 +51,9 @@ $(function(){
 				$("#seat-choosen ul #selected-"+$(this).attr("row")+"-"+$(this).attr("col")).fadeOut("500").setTimeout(remove(),500);
 			}
 		}
-	})
+	}
 	/* add a tip to display seat number */
-	.mousemove(function(event){
+	function seat_item_mousemove(event){
 		var y=10,x=20;
 		$("#seat-tip").show().css({
 			"display":"block",
@@ -64,54 +64,43 @@ $(function(){
 			$("#seat-tip").html("<p>已售</p>");
 		}
 		event.stopPropagation();
-	})
+	}
 	/* fade out the tip */
-	.mouseleave(function(event){
+	function seat_item_mouseleave(event){
 		$("#seat-tip").fadeOut(10);
 		event.stopPropagation();
-	});
-	/* end of seat-item */
-	$(".group-name").click(function(){
+	}
+
+	/* bind the event */
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+		$(".seat-item").bind({"touchend click":seat_item_click,"mousemove":seat_item_mousemove,"mouseleave":seat_item_mouseleave});
+	}else{
+		$(".seat-item").bind({"click":seat_item_click,"mousemove":seat_item_mousemove,"mouseleave":seat_item_mouseleave});
+	}
+
+	
+	function group_name_click(){
 		$(".group-names").hide();
 		$("#"+$(this).attr("href")).show();
 		$(".back").show();
-	});
-	$(".back").click(function(){
+	}
+	function back_click(){
 		$(".group-names").show();
 		$(".groups:visible").hide();
 		$(this).hide();
-	});
-	/*$("#buy-form").validate({
-		submitHandler:function(form){ 
-			form.submit();
-		},
-		rules:{
-			phone:{
-				required:true,phone:true
-			},
-			name:{
-				required:true,minlength:2
-			}
-		},
-		errorPlacement:function(error,element){
-			element.parent().next().children(".label").html="";
-			error.appendTo(element.parent().next().children(".label"));
-		},
-		messages:{
-			phone:{
-				required:"<img src="+getWrongPic()+">",phone:"<img src="+getWrongPic()+">"
-			},
-			name:{
-				required:"<img src="+getWrongPic()+">",minlength:"<img src="+getWrongPic()+">"
-			}
-		},
-		success:function(label){
-			label.html("<img src="+getRightPic()+">");
-		}
-	});
-	*/
+	}
+
+	/* bind the event */
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+		$(".group-name").bind({"touchend click":group_name_click});
+		$(".back").bind({"touchend click":back_click});
+	}else{
+		$(".group-name").bind({"click":group_name_click});
+		$(".back").bind({"click":back_click});
+	}
+
 	/* buy-form validate */
-	$("#buy-form #sub").click(function(){
+	function buy_form_sub_click(){
 		function checkPhone(value){
 			if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
 				return false;
@@ -159,7 +148,15 @@ $(function(){
 		if(phoneResult&&nameResult&&ticketResult){
 			$("#buy-form").submit();
 		}
-	});
+	}
+
+	/* bind the event */
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+		$("#buy-form #sub").bind({"touchend click":buy_form_sub_click});
+	}else{
+		$("#buy-form #sub").bind({"click":buy_form_sub_click});
+	}
+
 	/* find-form validate */
 	$("#find-form").validate({
 		debug:true,
@@ -232,7 +229,7 @@ $(function(){
 	});
 	/* end of find-form validate */
 	/* buy-form validate */
-	$("#buy-again-form #again-button").click(function(){
+	function buy_again_click(){
 		function checkPhone(value){
 			if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
 				return false;
@@ -276,6 +273,13 @@ $(function(){
 		if(nameResult&&phoneResult){
 			$("#buy-again-form").submit();
 		}
-	});
+	}
+
+	/* bind the event */
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+		$("#buy-again-form #again-button").bind({"touchend click":buy_again_click});
+	}else{
+		$("#buy-again-form #again-button").bind({"click":buy_again_click});
+	}
 });
 
