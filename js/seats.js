@@ -204,7 +204,6 @@ $(function(){
 					}else if(index==1){
 						$.each(info,function(i,content){
 							$.each(content,function(name,value){
-								console.log(name);
 								var li = $("<div></div>").addClass("items").appendTo($("#not-bought ul"));
 								if(name=="oid"){
 									var oid = $("<div></div>").addClass("oid").text(value).appendTo(li);
@@ -212,7 +211,9 @@ $(function(){
 									$('<input type="hidden" name="oid[]" class="oids">').val(value).appendTo($("#buy-again-form"));
 								}else if(name=="sids"){
 									$.each(value,function(i,sid){
-										$("<div></div>").addClass("sid").text(Math.floor((sid/colNum+1))+"排"+sid%colNum+"列").appendTo(li);
+										var row = Math.floor((sid-1)/colNum)+1;
+										var col = sid - (row-1)*colNum;
+										$("<div></div>").addClass("sid").text(row+"排"+col+"列").appendTo(li);
 									 });
 								}
 							});	
