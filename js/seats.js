@@ -11,7 +11,7 @@ $(function(){
 		if($(this).attr("state")==0){
 			if($(this).attr("select")==0){
 				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("col")+"座 ¥"+getSeatPrice($(this).attr("rank"))+'<span><img src='+getDelePic()+'></span></li>');
-				$("#buy-form").append('<input type="hidden" id="hidden-'+$(this).attr("row")+'-'+$(this).attr("col")+'" value="'+((parseInt($(this).attr("row"))-1)*colNum + parseInt($(this).attr("col"))-1)+'" name="seats[]">');
+				$("#buy-form").append('<input type="hidden" id="hidden-'+$(this).attr("row")+'-'+$(this).attr("col")+'" value="'+((parseInt($(this).attr("row"))-1)*colNum + parseInt($(this).attr("col")))+'" name="seats[]">');
 				$(this).css("background-color","#E22");
 				$(this).attr("select","1");
 				/* change money */
@@ -26,6 +26,7 @@ $(function(){
 					/* change money */
 					money-=getSeatPrice($("#seat-"+row+"-"+col).attr("rank"));
 					$("#total-money #price").text(money.toFixed(2));
+					$("#hidden-"+row+'-'+col).remove();
 					/* end of change money */
 					$(this).parents("li").fadeOut("500").setTimeout(remove(),500);
 				})
