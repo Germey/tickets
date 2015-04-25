@@ -73,7 +73,7 @@ class Welcome extends CI_Controller {
 	} 
 	
 	//提交订单
-	public function getSeats(){
+	public function pay(){
 		/*下单页面
 			完成功能：
 			1.更新seats表相应座位的state(状态码：1)
@@ -192,8 +192,10 @@ class Welcome extends CI_Controller {
 		$html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
 		echo $html_text;
 	}
+	
+	
 	//支付失败重新支付页面
-	private function payAgain(){
+	public function payAgain(){
 		$order = $_POST['oid'];
 		echo $order;
 		//判断是否合法

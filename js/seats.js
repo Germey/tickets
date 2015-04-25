@@ -184,10 +184,13 @@ $(function(){
 			function(data){
 				$("#find-result #bought p").html("已支付");
 				$("#find-result #not-bought p").html("未支付");
+				$(".none-result").hide();
 				findPhone = $("#find-form #phone").val();
 				$("#buy-again-form #phone").val($("#find-form #phone").val());
+				$('#buy-again-form input.oids').remove();
 				$("#find-button").val("查询");
 				res = JSON.parse(data);
+				$("#find-result ul div").remove();
 				$("#find-result ul li").remove();
 				$.each(res,function(index,info){
 					if(index==0){
@@ -199,14 +202,26 @@ $(function(){
 						}
 					}else if(index==1){
 						$.each(info,function(i,content){
-							$("#find-result #not-bought ul").append('<li>'+content["row"]+'排'+content['col']+'列</li>');
-							$("#buy-again-form").append('<input type="hidden" id="hidden-'+content['row']+'-'+content["col"]+'" value="'+content["sid"]+'" name="seats[]">');
+							$.each(content,function(name,value){
+								console.log(name);
+								var li = $("<div></div>").addClass("items").appendTo($("#not-bought ul"));
+								if(name=="oid"){
+									var oid = $("<div></div>").addClass("oid").text(value).appendTo(li);
+									$("<span></span>").html("订单号<br>").prependTo(oid);
+									$('<input type="hidden" name="oid[]" class="oids">').val(value).appendTo($("#buy-again-form"));
+								}else if(name=="sids"){
+									$.each(value,function(i,sid){
+										$("<div></div>").addClass("sid").text(Math.floor((sid/colNum+1))+"排"+sid%colNum+"列").appendTo(li);
+									 });
+								}
+							});	
 						});
 						if(info.length>0){
 							$("#again-group").show();
 						}
 						if(info.length==0){
-							$("#find-result #not-bought p").append('<p class="none-result">没有相关信息</p>')
+							$("#find-result #not-bought p").append('<p class="none-result">没有相关信息</p>');
+							$("#again-group").hide();
 						}
 					}
 				});

@@ -19,11 +19,13 @@
 		public function findInfo($phone){
 			$result = array();
 			$bought = array();
+			//oid which are not bought
 			$nbought = array();
 			$bi = 0;
 			$ni = 0;
 			$time = time();
-			$sidSql = "select * from orders where phone = '$phone' and ((fail_time > $time and state = 0) or state=1)";
+			//and (( 
+			$sidSql = "select * from orders where phone = '$phone' and state=1";
 			$sidResult = $this->db->query($sidSql);
 			foreach($sidResult->result_array() as $sidItem){
 				$sids = unserialize($sidItem['sid']);
@@ -32,19 +34,26 @@
 					$seatSql = "select * from seats where sid = ".$sid;
 					$seatResult = $this->db->query($seatSql);
 					$seatResult = $seatResult->result_array();
-					if($state==1){
-						$bought[$bi] = $seatResult[0];
-						$bi++;
-					}else if($state==0){
-						$nbought[$ni] = $seatResult[0];
-						$ni++;
-					}
+					$bought[$bi] = $seatResult[0];
+					$bi++;
 				}
+			}
+			$nboughtSql = "select * from orders where phone = '$phone' and fail_time > $time and state = 0";
+			$nboughtRes = $this->db->query($nboughtSql)->result_array();
+			foreach($nboughtRes as $item){
+				$res=array();
+				$sids = unserialize($item['sid']);
+				$res['oid']=$item['oid'];
+				$res['sids']=$sids;
+				$nbought[$ni]=$res;
+				$ni++;
 			}
 			$result[0] = $bought;
 			$result[1] = $nbought;
 			return $result;
 		}
+		
+		
 		//购票成功。更新订单信息
 		public function updateInfo($trade_no){
 			$sql = "update orders set state = 1 where oid = '$trade_no'";
