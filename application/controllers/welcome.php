@@ -143,14 +143,11 @@ class Welcome extends CI_Controller {
 
 	//根据授权码token调用交易接口alipay.wap.auth.authAndExecute
 	public function doTrade($data){
-		require_once("/var/www/ticket/phonepay/alipay.config.php");
-		require_once("/var/www/ticket/phonepay/lib/alipay_submit.class.php");
+		require_once("./phonepay/alipay.config.php");
+		require_once("./phonepay/lib/alipay_submit.class.php");
 		//请求业务参数详细
 		$req_data = '<direct_trade_create_req><notify_url>' . $data['notifyUrl'] . '</notify_url><call_back_url>' . $data['callBackUrl'] . '</call_back_url><seller_account_name>' . trim($alipay_config['seller_email']) . '</seller_account_name><out_trade_no>' . $data['outTradNo'] . '</out_trade_no><subject>' . $data['subject'] . '</subject><total_fee>' . $data['totalFee'] . '</total_fee><merchant_url>' . $data['merchantUrl'] . '</merchant_url></direct_trade_create_req>';
-		//必填
-		/************************************************************/
-
-		//构造要请求的参数数组，无需改动
+		
 		$para_token = array(
 				"service" => "alipay.wap.trade.create.direct",
 				"partner" => trim($alipay_config['partner']),
@@ -170,13 +167,11 @@ class Welcome extends CI_Controller {
 		
 		//解析远程模拟提交后返回的信息
 		$para_html_text = $alipaySubmit->parseResponse($html_text);
-		//获取request_token
+		
 		$request_token = $para_html_text['request_token'];
-		//业务详细
+	
 		$req_data = '<auth_and_execute_req><request_token>' . $request_token . '</request_token></auth_and_execute_req>';
-		//必填
-
-		//构造要请求的参数数组，无需改动
+		
 		$parameter = array(
 				"service" => "alipay.wap.auth.authAndExecute",
 				"partner" => trim($alipay_config['partner']),
@@ -196,28 +191,29 @@ class Welcome extends CI_Controller {
 	
 	//支付失败重新支付页面
 	public function payAgain(){
+		//传递订单号（数组）；
 		$order = $_POST['oid'];
-		echo $order;
 		//判断是否合法
-		$orderMoney = $this->ticket->getMoney($order);
-		if($orderMoney){
-			//获取token需要的各种参数
-			$data['format'] = "xml";
-			$data['v'] = "2.0";
-			$data['reqId'] = @date('Ymdhis');
-			$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
-			$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
-			$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
-			$data['outTradNo'] = $order;
-			$data['subject'] = "pay for tickets";
-			$data['totalFee'] = $orderMoney;
-			//$this->doTrade($data);
+		for($i=0;$i<count($order);$i++){
+			$orderMoney = $this->ticket->getMoney($order[$i]);
+			if($orderMoney){
+				//获取token需要的各种参数
+				$data['format'] = "xml";
+				$data['v'] = "2.0";
+				$data['reqId'] = @date('Ymdhis');
+				$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
+				$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
+				$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
+				$data['outTradNo'] = $order[$i];
+				$data['subject'] = "pay for tickets";
+				$data['totalFee'] = $orderMoney;
+				$this->doTrade($data);
+			}
+			else{
+				echo "请求错误!";
+				return;
+			}
 		}
-		else{
-			echo "请求错误!";
-			return;
-		}
-		
 	}
 	private function getTotalFee($seats){
 		$totalFee = $this->seats->getTotalFee($seats);
