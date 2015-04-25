@@ -8,7 +8,7 @@
 ?>
 <?php
 
-	class Seats_model extends CI_Model{
+	class Seats_model extends CI_Model{ 
 		
 		//构造方法
 		function __construct(){
@@ -27,23 +27,24 @@
 		//获取不可选的座位信息
 		public function getUnUseSeats(){
 			$seatsSaled = $this->getSeatsSaled();
-			$sql = "select * from orders";
-			$result = $this->db->query($sql);
+			$time = time();
+			$sql = "select * from orders where state = 1 or (state=0 and fail_time > '$time') ";
+			$result = $this->db->query($sql)->result_array();
 			//从订单表中获取到的当前不可选的座位代号
 			$sidOrderd = array();
 			$i = 0;
-			foreach($result->result_array() as $item){
-				$failTime = $item['fail_time'];
-				$state = $item['state'];
+			foreach($result as $item){
 				$sids = unserialize($item['sid']);
 				//如果订单支付成功，或者支付未成功但是订单还未过期
-				if($state==1||$state==0&&time()<$failTime){
+				//判断sids存在
+				if($sids){
 					foreach($sids as $sid){
 						$sidOrderd[$i] = $sid;
 						$i++;
 					}
 				}
 			}
+			//和order表中的数据合并
 			foreach($sidOrderd as $sid){
 				if(!in_array($sid,$seatsSaled)){
 					$seatsSaled[count($seatsSaled)] = $sid;
