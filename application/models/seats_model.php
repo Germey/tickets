@@ -7,7 +7,6 @@
  */
 ?>
 <?php
-
 	class Seats_model extends CI_Model{ 
 		
 		//构造方法
@@ -126,18 +125,18 @@
 		}
 		
 		public function judgeSeat($seats){
-			$result = true;
-			$sql = "select state from seats where sid = ";
-			foreach($seats as $seat){
-				$stateSql = $sql.$seat; 
-				$result = mysql_query($stateSql);
-				while($state = mysql_fetch_array($result)){
-					if($state['state'] == 1){
-						$result = false;
-						return $result;
+			$time = time();
+			$sql = "select sid from orders where state = 1 or (state=0 and fail_time > '$time')";
+			$seatIds = $this->db->query($sql)->result_array();
+			if(!empty($seatIds)){
+				foreach($seats as $seat){
+					for($i=0;$i<count($seatIds);$i++){
+						$seatId = unserialize($seatIds[$i]['sid']);
+						if(in_array($seat,$seatId))
+							return false;
 					}
-				}
+				}	
 			}
-			return $result;
+			return true;
 		}
 	}

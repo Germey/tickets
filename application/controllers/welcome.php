@@ -84,7 +84,7 @@ class Welcome extends CI_Controller {
 		$name = $_POST['name'];
 		
 		if(!($this->judgeSeat($seats))){
-			echo "订单不合法！请重新选择！";
+			echo "<a href='http://shiyida.net:8080/ticket/'>亲！有人在你之前选定该座位了哟！请您点击这里重新选座..</a>";
 			return;
 		}
 		//得到支付总额；
@@ -225,11 +225,8 @@ class Welcome extends CI_Controller {
 	}
 	//各种测试....
 	public function test(){
-		$test[0] = "hello";
-		$test[1] = "world";
-		$after = serialize($test);
-		echo $after."</br>";
-		var_dump(unserialize($after));
-		echo $test.count();
+		foreach (getallheaders() as $name => $value) {  
+			echo "$name: $value\n";  
+		}  
 	}
 }
