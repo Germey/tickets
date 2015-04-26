@@ -24,11 +24,10 @@
 			return $result->result_array();
 		}
 		
-		//获取不可选的座位信息
-		public function getUnUseSeats(){
-			$seatsSaled = $this->getSeatsSaled();
+		//获取已经预定但是未支付的的座位信息
+		public function getSeatsOrdered(){
 			$time = time();
-			$sql = "select * from orders where state = 1 or (state=0 and fail_time > '$time') ";
+			$sql = "select * from orders where state=0 and fail_time > '$time'";
 			$result = $this->db->query($sql)->result_array();
 			//从订单表中获取到的当前不可选的座位代号
 			$sidOrderd = array();
@@ -44,19 +43,14 @@
 					}
 				}
 			}
-			//和order表中的数据合并
-			foreach($sidOrderd as $sid){
-				if(!in_array($sid,$seatsSaled)){
-					$seatsSaled[count($seatsSaled)] = $sid;
-				}
-			}
-			//返回不可选的座位信息
-			return $seatsSaled;
+			//返回已经预定的座位信息
+			return $sidOrderd;
 		}
 		
 		//从seats表中获取已经购买的座位信息
 		public function getSeatsSaled(){
 			$sidSql = "select sid from seats where state = 1";
+			echo $sidSql;
 			$result = $this->db->query($sidSql)->result_array();
 			$res = array();
 			$i = 0;
