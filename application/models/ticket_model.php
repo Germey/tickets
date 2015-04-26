@@ -13,6 +13,7 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->database();
+			date_default_timezone_set('PRC');
 		}
 		
 		//查询已买的票的信息
