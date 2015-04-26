@@ -5,6 +5,8 @@ $(function(){
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
+		}else if($(this).attr("state")==2){
+			$(this).css("background-color","#66B");
 		}
 	});
 	function seat_item_click(){
@@ -62,6 +64,8 @@ $(function(){
 		}).html("<p>"+$(this).attr("row")+"排"+$(this).attr("col")+"座</p>");
 		if($(this).attr("state")==1){
 			$("#seat-tip").html("<p>已售</p>");
+		}else if($(this).attr("state")==2){
+			$("#seat-tip").html("<p>已预定</p>");
 		}
 		event.stopPropagation();
 	}
@@ -83,11 +87,13 @@ $(function(){
 		$(".group-names").hide();
 		$("#"+$(this).attr("href")).show();
 		$(".back").show();
+		$("#stage").hide();
 	}
 	function back_click(){
 		$(".group-names").show();
 		$(".groups:visible").hide();
 		$(this).hide();
+		$("#stage").show();
 	}
 
 	/* bind the event */

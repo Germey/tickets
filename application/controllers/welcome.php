@@ -47,14 +47,25 @@ class Welcome extends CI_Controller {
 		$this->load->view('coupon');
 	}
 	
-	
+	//获得已支付的座位,测试使用
+	private function getSeatsSaled(){
+		$this->seats->getSeatsSaled();
+	}
+
+	//获得已经预定的座位,测试使用
+	private function getSeatsOrdered(){
+		$this->seats->getSeatsOrdered();
+	}
+
 	//获得座位信息
 	public function loadSeats(){
 		$this->load->model("seats_model","seats");
 		$seatsInfo = $this->seats->getSeatsInfo();
-		$seatsUnUse = $this->seats->getUnUseSeats();
+		$getSeatsSaled = $this->seats->getSeatsSaled();
+		$getSeatsOrdered = $this->seats->getSeatsOrdered();
 		$info['seatsInfo'] = $seatsInfo;
-		$info['seatsUnUse'] = $seatsUnUse;
+		$info['getSeatsSaled'] = $getSeatsSaled;
+		$info['getSeatsOrdered'] = $getSeatsOrdered;
 		$this->load->view('seats',$info);
 	}
 	
