@@ -304,19 +304,45 @@ body{
 } 
 #seats #not-bought .items{
 	padding: 10px 10px;
-	background-color: #D3B144;
+	background-color: #D3B144;;
 	text-align: center;
-	float: left;
 	margin: 10px 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	overflow: hidden;
+}
+#seats #not-bought .title{
+	background: none !important;
+	padding: 0px !important;
+}
+#seats #not-bought .sid-content{
+	background: none !important;
+	padding: 0px !important;
 }
 #seats #not-bought .items .oid{
-	width:180px;
+	width: 230px;
+	float: left;
+	background: #598EEF;
+	padding: 5px 10px;
+}
+#seats #not-bought .items .choose{
+	float: left;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background: #E83D3D;
+	padding: 15px 10px;
+	cursor: pointer;
 }
 #seats #not-bought .items .sid{
-	width:60px;
+	margin: 5px;
+	background: #D3B144;
+	padding: 8px 10px;
+	width: 120px;
+	float: left;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 #seats #not-bought .none-result{
 	position:relative;
@@ -326,13 +352,23 @@ body{
 	margin: 20px auto;
 	width: 100%;
 	padding: 5px 10px;
-	background-color: #B8B128;
+	/*background-color: #B8B128;*/
 	width: 300px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	position: relative;
 	left: 10px;
+}
+#seats #find-result .not-bought-item{
+	overflow: hidden;
+	width: 300px;
+/*	background: #D3B144;*/
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin: 10px 0px 0px 10px;
+	padding: 10px;
 }
 
 /* 底部版权 */

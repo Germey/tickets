@@ -49,7 +49,6 @@
 		//从seats表中获取已经购买的座位信息
 		public function getSeatsSaled(){
 			$sidSql = "select sid from seats where state = 1";
-			echo $sidSql;
 			$result = $this->db->query($sidSql)->result_array();
 			$res = array();
 			$i = 0;

@@ -45,6 +45,8 @@
 				$sids = unserialize($item['sid']);
 				$res['oid']=$item['oid'];
 				$res['sids']=$sids;
+				$res['fail_time']= date("Y-m-d H:i:s",$item['fail_time']);
+				$res['money']=$item['money'];
 				$nbought[$ni]=$res;
 				$ni++;
 			}
