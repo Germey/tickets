@@ -222,8 +222,14 @@ $(function(){
 									var oid = $("<div></div>").addClass("oid").text(value).appendTo(li);
 									oid.parents(".items").addClass("title");
 									$("<span></span>").html("订单号<br>").prependTo(oid);
-									$("<div></div>").html("√").addClass("choose").appendTo(li);
-									$('<input type="hidden" name="oid[]" class="oids">').val(value).appendTo($("#buy-again-form"));
+									var choosen = $("<div></div>").html("√").addClass("choose").attr({"choose":"1","item-id":value}).appendTo(li);
+									/* bind the event */
+									if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+										choosen.bind({"touchend click":choose_item});
+									}else{
+										choosen.bind({"click":choose_item});
+									}
+									$('<input type="hidden" name="oid[]" class="oids">').val(value).attr("item-id",value).appendTo($("#buy-again-form"));
 								}else if(name=="sids"){
 									$.each(value,function(i,sid){
 										var row = Math.floor((sid-1)/colNum)+1;
@@ -309,5 +315,19 @@ $(function(){
 	}else{
 		$("#buy-again-form #again-button").bind({"click":buy_again_click});
 	}
+
+	function choose_item(){
+		if($(this).attr("choose")==1){
+			$(this).attr("choose",0);
+			$(this).css("background-color","#EEE");
+			$('#buy-again-form input[item-id='+$(this).attr("item-id")+']').remove();
+		}else if($(this).attr("choose")==0){
+			$(this).attr("choose",1);
+			$(this).css("background-color","#E83D3D");
+			$('<input type="hidden" name="oid[]" class="oids">').val($(this).attr("item-id")).attr("item-id",$(this).attr("item-id")).appendTo($("#buy-again-form"));
+		}
+	}
+
+	
 });
 
