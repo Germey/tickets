@@ -123,10 +123,13 @@ $(function(){
 			}      
 		}
 		function checkTicket(){
-			if($('#buy-form input[type="hidden"]').size()){
-				return true;
+			if($('#buy-form input[type="hidden"]').size()==0){
+				return 0;
+			}else if($('#buy-form input[type="hidden"]').size()>10){
+				/* choosen more than 10 seats */
+				return 1;
 			}else{
-				return false;
+				return 2;
 			}
 		}
 		var phone = $("#buy-form #phone").val();
@@ -144,14 +147,20 @@ $(function(){
 			$("#buy-form #name").parent().next().children(".label").html("<img src="+getRightPic()+">");
 		}
 		ticketResult = checkTicket();
-		if(!ticketResult){
+		if(ticketResult==0){
 			$("#mymodal").modal("show");
 			$("#mymodal .modal-body p").html("请至少选择一个座位");
 			$("#mymodal button").click(function(){
 				$("#mymodal").modal("hide");
 			});
+		}else if(ticketResult==1){
+			$("#mymodal").modal("show");
+			$("#mymodal .modal-body p").html("对不起，最多可选10个座位");
+			$("#mymodal button").click(function(){
+				$("#mymodal").modal("hide");
+			});
 		}
-		if(phoneResult&&nameResult&&ticketResult){
+		if(phoneResult&&nameResult&&ticketResult==2){
 			$("#buy-form").submit();
 		}
 	}
