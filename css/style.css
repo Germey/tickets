@@ -304,7 +304,7 @@ body{
 } 
 #seats #not-bought .items{
 	padding: 10px 10px;
-	background-color: #D3B144;;
+	background-color: #7774E8;;
 	text-align: center;
 	margin: 10px 10px;
 	-webkit-border-radius: 5px;
@@ -330,19 +330,30 @@ body{
 	float: left;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-	background: #E83D3D;
+	background: #C7C4C4;
 	padding: 15px 10px;
 	cursor: pointer;
 }
 #seats #not-bought .items .sid{
 	margin: 5px;
-	background: #D3B144;
+	background: #DF3B3B;
 	padding: 8px 10px;
 	width: 120px;
 	float: left;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+}
+#seats #not-bought .delete{
+	background: #FA4242;
+	padding: 8px 10px;
+	text-align: center;
+	width: 260px;
+	margin: auto;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	cursor: pointer;
 }
 #seats #not-bought .none-result{
 	position:relative;
@@ -352,7 +363,7 @@ body{
 	margin: 20px auto;
 	width: 100%;
 	padding: 5px 10px;
-	/*background-color: #B8B128;*/
+	background-color: #B8B128;
 	width: 300px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -363,12 +374,12 @@ body{
 #seats #find-result .not-bought-item{
 	overflow: hidden;
 	width: 300px;
-/*	background: #D3B144;*/
+	background: rgba(255,255,255,0.2);
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	margin: 10px 0px 0px 10px;
-	padding: 10px;
+	margin: 20px 0px 10px 10px;
+	padding: 10px 10px 20px 10px;
 }
 
 /* 底部版权 */

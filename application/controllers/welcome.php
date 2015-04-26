@@ -57,6 +57,16 @@ class Welcome extends CI_Controller {
 		$this->seats->getSeatsOrdered();
 	}
 
+	//删除订单
+	public function deleteOrder(){
+		$id=$_POST['id'];
+		$result = $this->ticket->deleteOrder($id);
+		if($result){
+			echo "1";
+		}else{
+			echo "0";
+		}
+	}
 	//获得座位信息
 	public function loadSeats(){
 		$this->load->model("seats_model","seats");

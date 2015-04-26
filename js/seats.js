@@ -222,14 +222,14 @@ $(function(){
 									var oid = $("<div></div>").addClass("oid").text(value).appendTo(li);
 									oid.parents(".items").addClass("title");
 									$("<span></span>").html("订单号<br>").prependTo(oid);
-									var choosen = $("<div></div>").html("√").addClass("choose").attr({"choose":"1","item-id":value}).appendTo(li);
+									var choosen = $("<div></div>").html("√").addClass("choose").attr({"choose":"0","item-id":value}).appendTo(li);
 									/* bind the event */
 									if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 										choosen.bind({"touchend click":choose_item});
 									}else{
 										choosen.bind({"click":choose_item});
 									}
-									$('<input type="hidden" name="oid[]" class="oids">').val(value).attr("item-id",value).appendTo($("#buy-again-form"));
+									//$('<input type="hidden" name="oid[]" class="oids">').val(value).attr("item-id",value).appendTo($("#buy-again-form"));
 								}else if(name=="sids"){
 									$.each(value,function(i,sid){
 										var row = Math.floor((sid-1)/colNum)+1;
@@ -243,7 +243,39 @@ $(function(){
 								}else if(name=="money"){
 									var money = $("<div></div>").addClass("money").text("¥"+value).appendTo(li);
 								}
+
 							});	
+							var del = $("<div></div>").addClass("delete").text("删除").appendTo(item);
+							del.on("click",function(){
+								var del = $(this);
+								$("#delete-modal").modal("show");
+								$("#delete-modal #cancel").click(function(){
+									$("#delete-modal").modal("hide");
+								});
+								$("#delete-modal #yes").click(function(){
+									var id = del.parents(".not-bought-item").find(".choose").attr("item-id");
+									$.post(getDeleteUrl(),
+									{"id":id},
+									function(data){
+										if(data){
+											$("#mymodal").modal("show");
+											$("#mymodal .modal-body p").html("删除订单成功");
+											$("#mymodal button").click(function(){
+												$("#mymodal").modal("hide");
+											});
+											$("#find-button").trigger("click");
+										}else{
+											$("#mymodal").modal("show");
+											$("#mymodal .modal-body p").html("删除订单失败");
+											$("#mymodal button").click(function(){
+												$("#mymodal").modal("hide");
+											});
+										}
+										
+									});
+									$("#delete-modal").modal("hide");
+								});
+							});
 						});
 						if(info.length>0){
 							$("#again-group").show();
@@ -277,6 +309,13 @@ $(function(){
 			}      
 		}
 		*/
+		function checkHidden(){
+			if($("#buy-again-form input.oids").size()==1){
+				return true;
+			}else{
+				return false;
+			}
+		}
 		var phone = $("#buy-again-form #phone").val();
 		/* if user change the form input by Browser */
 		phoneResult = checkPhone(phone);
@@ -295,6 +334,14 @@ $(function(){
 				$("#mymodal").modal("hide");
 			});
 		}
+		var hiddenResult = checkHidden();
+		if(!hiddenResult){
+			$("#mymodal").modal("show");
+			$("#mymodal .modal-body p").html("请选择一个订单支付");
+			$("#mymodal button").click(function(){
+				$("#mymodal").modal("hide");
+			});
+		}
 		/*
 		var name = $("#buy-again-form #name").val();
 		nameResult = checkName(name);
@@ -304,7 +351,7 @@ $(function(){
 			$("#buy-again-form #name").parent().next().children(".label").html("<img src="+getRightPic()+">");
 		}
 		*/
-		if(phoneResult){
+		if(phoneResult&&hiddenResult){
 			$("#buy-again-form").submit();
 		}
 	}
@@ -319,7 +366,7 @@ $(function(){
 	function choose_item(){
 		if($(this).attr("choose")==1){
 			$(this).attr("choose",0);
-			$(this).css("background-color","#EEE");
+			$(this).css("background-color","#C7C4C4");
 			$('#buy-again-form input[item-id='+$(this).attr("item-id")+']').remove();
 		}else if($(this).attr("choose")==0){
 			$(this).attr("choose",1);

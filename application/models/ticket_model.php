@@ -56,7 +56,13 @@
 			return $result;
 		}
 		
-		
+		//删除订单
+		public function deleteOrder($id){
+			$sql = "delete from orders where oid = '$id'";
+			$result = mysql_query($sql);
+			return $result;
+		}
+
 		//购票成功。更新订单信息
 		public function updateInfo($trade_no){
 			$sql = "update orders set state = 1 where oid = '$trade_no'";

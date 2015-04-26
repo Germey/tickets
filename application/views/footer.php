@@ -22,6 +22,9 @@
 		function getFindUrl(){
 			return '<?php echo base_url();?>index.php/welcome/findInfo';
 		}
+		function getDeleteUrl(){
+			return '<?php echo base_url();?>index.php/welcome/deleteOrder';
+		}
 		function getSeatPrice(rank){
 			var price = 0;
 			switch(rank){
