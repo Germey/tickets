@@ -113,7 +113,7 @@
 		?>
 		</div>
 	</div>
-	<div class="sign" >
+	<div class="sign" style="display:none;">
 		<div class="item">
 			<div class="des">已售</div>
 			<div class="color" style="background-color: #888;"></div>

@@ -87,12 +87,14 @@ $(function(){
 		$(".group-names").hide();
 		$("#"+$(this).attr("href")).show();
 		$(".back").show();
+		$(".sign").show();
 		$("#stage").hide();
 	}
 	function back_click(){
 		$(".group-names").show();
 		$(".groups:visible").hide();
 		$(this).hide();
+		$(".sign").hide();
 		$("#stage").show();
 	}
 
