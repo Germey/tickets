@@ -113,6 +113,20 @@
 		?>
 		</div>
 	</div>
+	<div class="sign" >
+		<div class="item">
+			<div class="des">已售</div>
+			<div class="color" style="background-color: #888;"></div>
+		</div>
+		<div class="item">
+			<div class="des">已预订</div>
+			<div class="color" style="background-color: #66B;"></div>
+		</div>
+		<div class="item">
+			<div class="des">当前选择</div>
+			<div class="color" style="background-color: rgb(238, 34, 34);"></div>
+		</div>
+	</div>
 	<div class="back" style="display:none;">
 		返回
 	</div>

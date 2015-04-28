@@ -219,16 +219,9 @@ $(function(){
 							$.each(content,function(name,value){
 								var li = $("<div></div>").addClass("items").appendTo(item);
 								if(name=="oid"){
-									var oid = $("<div></div>").addClass("oid").text(value).appendTo(li);
+									var oid = $("<div></div>").addClass("oid").html("<span>"+value+"</span>").appendTo(li);
 									oid.parents(".items").addClass("title");
-									$("<span></span>").html("订单号<br>").prependTo(oid);
-									var choosen = $("<div></div>").html("√").addClass("choose").attr({"choose":"0","item-id":value}).appendTo(li);
-									/* bind the event */
-									if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-										choosen.bind({"touchend click":choose_item});
-									}else{
-										choosen.bind({"click":choose_item});
-									}
+									$("<label></label>").html("订单号&nbsp;").prependTo(oid);
 									//$('<input type="hidden" name="oid[]" class="oids">').val(value).attr("item-id",value).appendTo($("#buy-again-form"));
 								}else if(name=="sids"){
 									$.each(value,function(i,sid){
@@ -243,39 +236,19 @@ $(function(){
 								}else if(name=="money"){
 									var money = $("<div></div>").addClass("money").text("¥"+value).appendTo(li);
 								}
-
 							});	
-							var del = $("<div></div>").addClass("delete").text("删除").appendTo(item);
-							del.on("click",function(){
-								var del = $(this);
-								$("#delete-modal").modal("show");
-								$("#delete-modal #cancel").click(function(){
-									$("#delete-modal").modal("hide");
-								});
-								$("#delete-modal #yes").click(function(){
-									var id = del.parents(".not-bought-item").find(".choose").attr("item-id");
-									$.post(getDeleteUrl(),
-									{"id":id},
-									function(data){
-										if(data){
-											$("#mymodal").modal("show");
-											$("#mymodal .modal-body p").html("删除订单成功");
-											$("#mymodal button").click(function(){
-												$("#mymodal").modal("hide");
-											});
-											$("#find-button").trigger("click");
-										}else{
-											$("#mymodal").modal("show");
-											$("#mymodal .modal-body p").html("删除订单失败");
-											$("#mymodal button").click(function(){
-												$("#mymodal").modal("hide");
-											});
-										}
-										
-									});
-									$("#delete-modal").modal("hide");
-								});
-							});
+							var li = $("<div></div>").addClass("btns").appendTo(item);
+							var choosen = $("<div></div>").html("选择订单").addClass("choose not-choose-order").attr({"choose":"0","item-id":item.children(0).find("span").html()}).appendTo(li);
+							var del = $("<div></div>").addClass("delete").text("删除").appendTo(li);
+							/* bind the click function */
+							if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+								choosen.bind({"touchend click":choose_order});
+								del.bind({"touchend click":del_order});
+							}else{
+								choosen.bind({"click":choose_order});
+								del.bind({"click":del_order});
+							}
+
 						});
 						if(info.length>0){
 							$("#again-group").show();
@@ -363,18 +336,49 @@ $(function(){
 		$("#buy-again-form #again-button").bind({"click":buy_again_click});
 	}
 
-	function choose_item(){
+	/* choose order */
+	function choose_order(){
 		if($(this).attr("choose")==1){
-			$(this).attr("choose",0);
-			$(this).css("background-color","#C7C4C4");
+			$(this).attr("choose",0).removeClass("choose-order").addClass("not-choose-order");
 			$('#buy-again-form input[item-id='+$(this).attr("item-id")+']').remove();
 		}else if($(this).attr("choose")==0){
-			$(this).attr("choose",1);
-			$(this).css("background-color","#E83D3D");
+			$(this).attr("choose",1).removeClass("not-choose-order").addClass("choose-order");
 			$('<input type="hidden" name="oid[]" class="oids">').val($(this).attr("item-id")).attr("item-id",$(this).attr("item-id")).appendTo($("#buy-again-form"));
 		}
 	}
-
+	/* end of choose order */
+	/* delete order function */
+	function del_order(){
+		var del = $(this);
+		$("#delete-modal").modal("show");
+		$("#delete-modal #cancel").click(function(){
+			$("#delete-modal").modal("hide");
+		});
+		$("#delete-modal #yes").click(function(){
+			var id = del.parents(".not-bought-item").find(".choose").attr("item-id");
+			$.post(getDeleteUrl(),
+			{"id":id},
+			function(data){
+				if(data){
+					$("#mymodal").modal("show");
+					$("#mymodal .modal-body p").html("删除订单成功");
+					$("#mymodal button").click(function(){
+						$("#mymodal").modal("hide");
+					});
+					$("#find-button").trigger("click");
+				}else{
+					$("#mymodal").modal("show");
+					$("#mymodal .modal-body p").html("删除订单失败");
+					$("#mymodal button").click(function(){
+						$("#mymodal").modal("hide");
+					});
+				}
+				
+			});
+			$("#delete-modal").modal("hide");
+		});
+	}
+	/*end of delete function */
 	
 });
 

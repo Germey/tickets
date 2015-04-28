@@ -321,19 +321,11 @@ body{
 	padding: 0px !important;
 }
 #seats #not-bought .items .oid{
-	width: 230px;
-	float: left;
+	width: 260px;
 	background: #598EEF;
 	padding: 5px 10px;
 }
-#seats #not-bought .items .choose{
-	float: left;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	background: #C7C4C4;
-	padding: 15px 10px;
-	cursor: pointer;
-}
+
 #seats #not-bought .items .sid{
 	margin: 5px;
 	background: #DF3B3B;
@@ -344,16 +336,31 @@ body{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
-#seats #not-bought .delete{
-	background: #FA4242;
-	padding: 8px 10px;
-	text-align: center;
+#seats #not-bought .btns{
+	overflow: hidden;
 	width: 260px;
 	margin: auto;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+}
+#seats #not-bought  .choose{
+	float: left;
+	text-align: center;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding: 15px 10px;
 	cursor: pointer;
+	width: 130px;
+	padding: 8px 10px;
+}
+#seats #not-bought .delete{
+	background: #E83D3D;
+	padding: 8px 10px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	text-align: center;
+	width: 130px;
+	margin: auto;
+	cursor: pointer;
+	float: left;
 }
 #seats #not-bought .none-result{
 	position:relative;
@@ -381,7 +388,29 @@ body{
 	margin: 20px 0px 10px 10px;
 	padding: 10px 10px 20px 10px;
 }
+#seats .sign{
+	overflow: hidden;
+	width: 220px;
+	margin: auto;
+	position: relative;
+	left: 5px;
+	padding: 20px 0px 10px 0;
+}
+#seats .sign .item{
+	overflow: hidden;
+	float: left;
+}
+#seats .sign .item .des{
+	float: left;
+	color: #FFFFFF;
+}
+#seats .sign .item .color{
+	width: 15px;
+	height: 15px;
+	margin: 2px 10px 0px 5px;
+	float: left;
 
+}
 /* 底部版权 */
 .foot{
 	text-align:center;
@@ -399,4 +428,11 @@ body{
 /* font-awesome */
 .fa{
 	line-height: 20px !important;
+}
+
+.choose-order{
+	background-color: #E83D3D;
+}
+.not-choose-order{
+	background-color: #C7C4C4;
 }
