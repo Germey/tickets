@@ -16,6 +16,7 @@ class Welcome extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	function __construct(){
+		session_start();
 		parent::__construct();
 		$this->load->helper("url");
 		$this->load->model("seats_model","seats");
@@ -31,6 +32,24 @@ class Welcome extends CI_Controller {
 		$this->loadFooter();
 	}
 	
+	public function getCode(){
+		require_once(APPPATH."third_party/code.class.php");
+	    $code=new Code(80, 30, 4);
+	    $code->showImage();   //输出到页面中供 注册或登录使用
+	    $_SESSION["code"]=$code->getCheckCode();  //将验证码保存到服务器中
+	} 
+
+	public function checkCode(){
+		$code = $_POST['checkcode'];
+		$session_code = $_SESSION["code"];
+		//不区分大小写比较验证码
+		if(strcasecmp($code,$session_code)==0){
+			echo 1;
+		}else{
+			echo 0;
+		}
+	}
+
 	//加载头部
 	function loadHeader(){
 		$this->load->view('header');
@@ -144,8 +163,8 @@ class Welcome extends CI_Controller {
 			完成功能：更新订单状态（状态码：1）
 					 更新座位表状态(状态码:1)
 		*/
-		require_once("/var/www/ticket/phonepay/alipay.config.php");
-		require_once("/var/www/ticket/phonepay/lib/alipay_notify.class.php");
+		require_once(APPPATH."../phonepay/alipay.config.php");
+		require_once(APPPATH."../phonepay/lib/alipay_notify.class.php");
 		
 		$alipayNotify = new AlipayNotify($alipay_config);
 		$verify_result = $alipayNotify->verifyReturn();
@@ -164,8 +183,8 @@ class Welcome extends CI_Controller {
 
 	//根据授权码token调用交易接口alipay.wap.auth.authAndExecute
 	public function doTrade($data){
-		require_once("./phonepay/alipay.config.php");
-		require_once("./phonepay/lib/alipay_submit.class.php");
+		require_once(APPPATH."../phonepay/alipay.config.php");
+		require_once(APPPATH."../phonepay/lib/alipay_submit.class.php");
 		//请求业务参数详细
 		$req_data = '<direct_trade_create_req><notify_url>' . $data['notifyUrl'] . '</notify_url><call_back_url>' . $data['callBackUrl'] . '</call_back_url><seller_account_name>' . trim($alipay_config['seller_email']) . '</seller_account_name><out_trade_no>' . $data['outTradNo'] . '</out_trade_no><subject>' . $data['subject'] . '</subject><total_fee>' . $data['totalFee'] . '</total_fee><merchant_url>' . $data['merchantUrl'] . '</merchant_url></direct_trade_create_req>';
 		

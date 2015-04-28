@@ -2,6 +2,7 @@ $(function(){
 	var colNum = 25;
 	var money = 0;
 	var findPhone = "";
+	var codeResult = 0;
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
@@ -109,46 +110,10 @@ $(function(){
 
 	/* buy-form validate */
 	function buy_form_sub_click(){
-		function checkPhone(value){
-			if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
-				return false;
-			 }else{
-				return true;
-			}
-		}
-		function checkName(value){     
-			var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/);      
-			if(!containSpecial.test(value)&&value.length>=2){
-				return true;
-			}else{
-				return false;
-			}      
-		}
-		function checkTicket(){
-			if($('#buy-form input[type="hidden"]').size()==0){
-				return 0;
-			}else if($('#buy-form input[type="hidden"]').size()>10){
-				/* choosen more than 10 seats */
-				return 1;
-			}else{
-				return 2;
-			}
-		}
-		var phone = $("#buy-form #phone").val();
-		phoneResult = checkPhone(phone);
-		if(!phoneResult){
-			$("#buy-form #phone").parent().next().children(".label").html("<img src="+getWrongPic()+">");
-		}else{
-			$("#buy-form #phone").parent().next().children(".label").html("<img src="+getRightPic()+">");
-		}
-		var name = $("#buy-form #name").val();
-		nameResult = checkName(name);
-		if(!nameResult){
-			$("#buy-form #name").parent().next().children(".label").html("<img src="+getWrongPic()+">");
-		}else{
-			$("#buy-form #name").parent().next().children(".label").html("<img src="+getRightPic()+">");
-		}
-		ticketResult = checkTicket();
+		
+		phoneResult = checkPhone();
+		nameResult = checkName();
+		var ticketResult = checkTicket();
 		if(ticketResult==0){
 			$("#mymodal").modal("show");
 			$("#mymodal .modal-body p").html("请至少选择一个座位");
@@ -162,7 +127,7 @@ $(function(){
 				$("#mymodal").modal("hide");
 			});
 		}
-		if(phoneResult&&nameResult&&ticketResult==2){
+		if(phoneResult&&nameResult&&ticketResult==2&&codeResult){
 			$("#buy-form").submit();
 		}
 	}
@@ -380,7 +345,58 @@ $(function(){
 			$("#delete-modal").modal("hide");
 		});
 	}
-	/*end of delete function */
+	/* end of delete function */
+	/* some check */
+	function checkCode(){
+		code = $(this).val();
+		$.post(getCheckCodeUrl(),
+		{"checkcode":code},
+		function(data){
+			if(data==1){
+				codeResult=1;
+				$("#buy-form #checkcode").parent().next().children(".label").html("<img src="+getRightPic()+">");
+			}else{
+				codeResult=0;
+				$("#buy-form #checkcode").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+			}
+		});
+	}
+	function checkPhone(){
+		var value = $("#buy-form #phone").val();
+		if((value.length != 11) || (!value.match(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0-9])\d{8}$/))){
+			$("#buy-form #phone").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+			return false;
+		 }else{
+		 	$("#buy-form #phone").parent().next().children(".label").html("<img src="+getRightPic()+">");
+			return true;
+		}
+	}
+	function checkName(){
+		var value = $("#buy-form #name").val();     
+		var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/);      
+		if(!containSpecial.test(value)&&value.length>=2){
+			$("#buy-form #name").parent().next().children(".label").html("<img src="+getRightPic()+">");
+			return true;
+		}else{
+			$("#buy-form #name").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+			return false;
+		}      
+	}
+	function checkTicket(){
+		if($('#buy-form input[type="hidden"]').size()==0){
+			return 0;
+		}else if($('#buy-form input[type="hidden"]').size()>10){
+			/* choosen more than 10 seats */
+			return 1;
+		}else{
+			return 2;
+		}
+	}
+	/* bind thc blur check */
+	$("#buy-form #checkcode").bind("blur",checkCode);
+	$("#buy-form #phone").bind("blur",checkPhone);
+	$("#buy-form #name").bind("blur",checkName);
+
 	
 });
 

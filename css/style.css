@@ -415,6 +415,20 @@ body{
 	-webkit-border-radius: 3px;
 
 }
+#seats .code-item{
+	overflow: hidden;
+}
+#seats .code-item .form-input{
+	float: left;
+	width: 50% !important;
+}
+#seats .code-item .form-input input{
+	width: 120% !important;
+}
+#seats .code-item .checkcode{
+	float: right;
+	margin: 17px 5% 0 10px;
+}
 /* 底部版权 */
 .foot{
 	text-align:center;
@@ -435,7 +449,7 @@ body{
 }
 
 .choose-order{
-	background-color: #E83D3D;
+	background-color: #D38989;
 }
 .not-choose-order{
 	background-color: #C7C4C4;

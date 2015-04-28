@@ -25,6 +25,9 @@
 		function getDeleteUrl(){
 			return '<?php echo base_url();?>index.php/welcome/deleteOrder';
 		}
+		function getCheckCodeUrl(){
+			return '<?php echo base_url();?>index.php/welcome/checkCode';
+		}
 		function getSeatPrice(rank){
 			var price = 0;
 			switch(rank){
