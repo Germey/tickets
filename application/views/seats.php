@@ -124,7 +124,7 @@
 		</div>
 		<div class="item">
 			<div class="des">当前选择</div>
-			<div class="color" style="background-color: rgb(238, 34, 34);"></div>
+			<div class="color" style="background-color: #E22;"></div>
 		</div>
 	</div>
 	<div class="back" style="display:none;">

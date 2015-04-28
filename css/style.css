@@ -222,14 +222,12 @@ body{
 	max-width:300px;
 }
 #seats #personal-info #again-button{
-	width:300px;
-	position: relative;
-	left: 10px;
-	margin: 20px 0px 10px 0px;
+	max-width:300px;
+	margin: 20px auto;
+	width: 100%;
 }
 #seats #buy-again-form ul{
-	position: relative;
-	left: -40px;
+	max-width: 300px;
 }
 #seats #personal-info .button{
 	width:100%;
@@ -243,8 +241,8 @@ body{
 	padding: 0px 20px;
 }
 #seats #find-result{
-	position:relative;
-	left:-10px;
+	max-width: 300px;
+	margin: auto;
 }
 #seats #again-group .form-item{
 	position: relative;
@@ -275,21 +273,23 @@ body{
 }
 #seats .form-item .form-label{
 	float:left;
-	margin: 20px 5px;
+	margin: 20px 0px;
 }
 #seats #find-form{
 	max-width: 300px;
 	margin: 20px auto;
 }
 #seats #find-result p{
-	margin:10px auto 20px 0;
+	margin: 10px auto 20px auto;
+	padding: 0;
 }
 #seats #find-result ul{
 	list-style:none;
-	width:380px;
+	max-width:300px;
 	margin:auto;
 	color:#FFF;
 	overflow:hidden;
+	padding: 0px;
 }
 #seats #find-result ul li{
 	padding: 10px 10px;
@@ -306,7 +306,8 @@ body{
 	padding: 10px 10px;
 	background-color: #7774E8;;
 	text-align: center;
-	margin: 10px 10px;
+	width: 100%;
+	margin: 15px auto;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -321,16 +322,16 @@ body{
 	padding: 0px !important;
 }
 #seats #not-bought .items .oid{
-	width: 260px;
+	width: 100%;
 	background: #598EEF;
 	padding: 5px 10px;
 }
 
 #seats #not-bought .items .sid{
-	margin: 5px;
+	margin: 5px 3%;
 	background: #DF3B3B;
 	padding: 8px 10px;
-	width: 120px;
+	width: 44%;
 	float: left;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -338,7 +339,7 @@ body{
 }
 #seats #not-bought .btns{
 	overflow: hidden;
-	width: 260px;
+	width: 100%;
 	margin: auto;
 }
 #seats #not-bought  .choose{
@@ -348,7 +349,7 @@ body{
 	border-bottom-left-radius: 5px;
 	padding: 15px 10px;
 	cursor: pointer;
-	width: 130px;
+	width: 50%;
 	padding: 8px 10px;
 }
 #seats #not-bought .delete{
@@ -357,10 +358,13 @@ body{
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	text-align: center;
-	width: 130px;
+	width: 50%;
 	margin: auto;
 	cursor: pointer;
 	float: left;
+}
+#seats #not-bought{
+	width: 100%;
 }
 #seats #not-bought .none-result{
 	position:relative;
@@ -371,22 +375,21 @@ body{
 	width: 100%;
 	padding: 5px 10px;
 	background-color: #B8B128;
-	width: 300px;
+	max-width: 300px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	position: relative;
-	left: 10px;
 }
 #seats #find-result .not-bought-item{
 	overflow: hidden;
-	width: 300px;
+	width: 100%;
+	max-width: 300px;
 	background: rgba(255,255,255,0.2);
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	margin: 20px 0px 10px 10px;
-	padding: 10px 10px 20px 10px;
+	margin: 20px auto 10px auto;
+	padding: 10px 20px 20px 20px;
 }
 #seats .sign{
 	overflow: hidden;
