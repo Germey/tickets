@@ -116,16 +116,19 @@
 			}
 			return $totalFee;
 		}
-		
+		//判断座位是否已经售出或者已经被预定
 		public function judgeSeat($seats){
 			$time = time();
-			$sql = "select sid from orders where state = 1 or (state=0 and fail_time > '$time')";
-			$seatIds = $this->db->query($sql)->result_array();
+			$sql = "select sid from orders where state = 1 or (state = 0 and fail_time > '$time')";
+			$result = $this->db->query($sql);
+			$seatIds = $result->result_array();
+			/* var_dump($seats);
+			var_dump($seatIds); */
 			if(!empty($seatIds)){
-				foreach($seats as $seat){
-					for($i=0;$i<count($seatIds);$i++){
-						$seatId = unserialize($seatIds[$i]['sid']);
-						if(in_array($seat,$seatId))
+				for($i=0;$i<count($seats);$i++){
+					foreach($seatIds as $seatItem){
+						$seatId = unserialize($seatItem['sid']);
+						if(in_array($seats[$i],$seatId))
 							return false;
 					}
 				}	

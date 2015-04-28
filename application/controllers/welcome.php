@@ -106,35 +106,36 @@ class Welcome extends CI_Controller {
 		
 		if(!($this->judgeSeat($seats))){
 			echo "<a href='http://shiyida.net:8080/ticket/'>亲！有人在你之前选定该座位了哟！请您点击这里重新选座..</a>";
-			return;
 		}
-		//得到支付总额；
-		$money = $this->getTotalFee($seats);
-		
-		//获取token需要的各种参数
-		$data['format'] = "xml";
-		$data['v'] = "2.0";
-		$data['reqId'] = @date('Ymdhis');
-		$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
-		$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
-		$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
-		$data['outTradNo'] = $phone.time();
-		$data['subject'] = "pay for tickets";
-		$data['totalFee'] = $money;
-		//参数配置结束
-		
-		//向订单表插入订单信息
-		$order['oid'] = $phone.time();
-		$order['phone'] = $phone;
-		$order['name'] = $name;
-		$order['money'] = $money;
-		$order['sid'] = serialize($seats);
-		$order['state'] = 0;
-		//订单失效时间
-		$order['failTime'] = time()+60*45;
- 		$this->ticket->insertOrder($order);
-		//开始交易
-		$this->doTrade($data);
+		else{
+			//得到支付总额；
+			$money = $this->getTotalFee($seats);
+			
+			//获取token需要的各种参数
+			$data['format'] = "xml";
+			$data['v'] = "2.0";
+			$data['reqId'] = @date('Ymdhis');
+			$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
+			$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
+			$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
+			$data['outTradNo'] = $phone.time();
+			$data['subject'] = "pay for tickets";
+			$data['totalFee'] = $money;
+			//参数配置结束
+			
+			//向订单表插入订单信息
+			$order['oid'] = $phone.time();
+			$order['phone'] = $phone;
+			$order['name'] = $name;
+			$order['money'] = $money;
+			$order['sid'] = serialize($seats);
+			$order['state'] = 0;
+			//订单失效时间
+			$order['failTime'] = time()+60*45;
+			$this->ticket->insertOrder($order);
+			//开始交易
+			$this->doTrade($data);
+		}
 	}
 	
 	//支付成功回调页面
@@ -154,7 +155,6 @@ class Welcome extends CI_Controller {
 			$this->ticket->updateInfo($out_trade_no);
 			//更新座位表信息；锁定已被订购座位
 			$this->seats->updateInfo($out_trade_no);
-			
 			$this->load->view('success');
 		}
 		else {
@@ -246,8 +246,27 @@ class Welcome extends CI_Controller {
 	}
 	//各种测试....
 	public function test(){
-		foreach (getallheaders() as $name => $value) {  
-			echo "$name: $value\n";  
-		}  
+		$seats[0]=1;
+		$seats[1]=2;
+		$seats[2]=3;
+		$seatIds1[0]=2;
+		$seatIds1[1]=4;
+		$a = serialize($seatIds1);
+		$seatIds2[0]=12;
+		$seatIds2[0]=13;
+		$b = serialize($seatIds2);
+		$arrs['a']=$a;
+		$arrs['b']=$b;
+		for($i=0;$i<count($seats);$i++){
+			foreach($arrs as $arr){
+			
+				$temp = unserialize($arr);
+				if(in_array($seats[$i],$temp))
+					echo $seats[$i];
+				else
+					echo "NO"."</br>";
+			}
+		}
+		
 	}
 }
