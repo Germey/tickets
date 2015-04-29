@@ -129,10 +129,10 @@
 					foreach($seatIds as $seatItem){
 						$seatId = unserialize($seatItem['sid']);
 						if(in_array($seats[$i],$seatId))
-							return false;
+							return true;
 					}
 				}	
 			}
-			return true;
+			return false;
 		}
 	}

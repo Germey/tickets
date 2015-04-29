@@ -28,6 +28,9 @@
 		function getCheckCodeUrl(){
 			return '<?php echo base_url();?>index.php/welcome/checkCode';
 		}
+		function getjudgeSeatUrl(){
+			return '<?php echo base_url();?>index.php/welcome/judgeSeat';
+		}
 		function getSeatPrice(rank){
 			var price = 0;
 			switch(rank){

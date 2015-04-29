@@ -123,6 +123,7 @@ class Welcome extends CI_Controller {
 		$phone = $_POST['phone'];
 		$name = $_POST['name'];
 		$code = $_POST['checkcode'];
+		$session_code = $_SESSION["code"];
 		if(!empty($seats) && !empty($phone) && !empty($name) && (strcasecmp($code,$session_code)==0)){
 			//得到支付总额；
 			$money = $this->getTotalFee($seats);
@@ -255,9 +256,10 @@ class Welcome extends CI_Controller {
 		return $totalFee;
 	}
 	//判断座位是否被占用
-	private function judgeSeat(){
+	public function judgeSeat(){
 		$seats = @$_POST['seats'];
-		$result = $this->seats->judgeSeat($seats);
+		$seatsArray = explode(",", $seats);
+		$result = $this->seats->judgeSeat($seatsArray);
 		if($result){
 			//座位已经被占
 			echo 0;

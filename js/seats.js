@@ -3,6 +3,7 @@ $(function(){
 	var money = 0;
 	var findPhone = "";
 	var codeResult = 0;
+	var judgeResult =0;
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
@@ -17,6 +18,7 @@ $(function(){
 				$("#buy-form").append('<input type="hidden" id="hidden-'+$(this).attr("row")+'-'+$(this).attr("col")+'" value="'+((parseInt($(this).attr("row"))-1)*colNum + parseInt($(this).attr("col")))+'" name="seats[]">');
 				$(this).css("background-color","#E22");
 				$(this).attr("select","1");
+				judgeSeat($(this));
 				/* change money */
 				money+=getSeatPrice($(this).attr("rank"));
 				$("#total-money #price").text(money.toFixed(2));
@@ -110,23 +112,25 @@ $(function(){
 
 	/* buy-form validate */
 	function buy_form_sub_click(){
+		
 		phoneResult = checkPhone();
 		nameResult = checkName();
-		var ticketResult = checkTicket();
+		ticketResult = checkTicket();
+		judgeSeat();
 		if(ticketResult==0){
 			$("#mymodal").modal("show");
-			$("#mymodal .modal-body p").html("请至少选择一个座位");
+			$("#mymodal .modal-body p").html("亲，请至少选择一个座位！");
 			$("#mymodal button").click(function(){
 				$("#mymodal").modal("hide");
 			});
 		}else if(ticketResult==1){
 			$("#mymodal").modal("show");
-			$("#mymodal .modal-body p").html("对不起，最多可选10个座位");
+			$("#mymodal .modal-body p").html("亲，不好意思，最多可选10个座位！");
 			$("#mymodal button").click(function(){
 				$("#mymodal").modal("hide");
 			});
 		}
-		if(phoneResult&&nameResult&&ticketResult==2&&codeResult){
+		if(phoneResult&&nameResult&&ticketResult==2&&codeResult&&judgeResult){
 			$("#buy-form").submit();
 		}
 	}
@@ -345,7 +349,47 @@ $(function(){
 		});
 	}
 	/* end of delete function */
+
+	
+
 	/* some check */
+	/* check the seats whether ordered or not */
+	function judgeSeat(this_seat){
+		seats = $("#buy-form input[type='hidden']");
+		seatsArray = new Array();
+		var i = 0;
+		$.each(seats,function(index,value){
+			seatsArray[i] = $(value).val();
+			i++;
+		});
+		$.post(getjudgeSeatUrl(),
+		{"seats":seatsArray.join(",")},
+		function(data){
+			/* the seats are ordered by others */
+			if(data==0){
+				$("#mymodal").modal("show");
+				$("#mymodal .modal-body p").html("亲，您慢了一步哦，座位已经被选啦，请重新选择吧！");
+				$("#mymodal button").click(function(){
+					$("#mymodal").modal("hide");
+				});
+				if(this_seat){
+					$(this_seat).css("background-color","#FFF");
+					$(this_seat).attr("select","0");
+					/* change money */
+					money-=getSeatPrice($(this_seat).attr("rank"));
+					$("#total-money #price").text(money.toFixed(2));
+					/* end of change money */
+					$("#hidden-"+$(this_seat).attr("row")+'-'+$(this_seat).attr("col")).remove();
+					/* remove seat-choosen li */
+					$("#seat-choosen ul #selected-"+$(this_seat).attr("row")+"-"+$(this_seat).attr("col")).fadeOut("500").setTimeout(remove(),500);
+				}
+				judgeResult = 0;
+			/* can choose the seats */
+			}else{
+				judgeResult = 1;
+			}
+		});
+	}
 	function checkCode(){
 		code = $(this).val();
 		$.post(getCheckCodeUrl(),
