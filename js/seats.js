@@ -110,7 +110,6 @@ $(function(){
 
 	/* buy-form validate */
 	function buy_form_sub_click(){
-		
 		phoneResult = checkPhone();
 		nameResult = checkName();
 		var ticketResult = checkTicket();

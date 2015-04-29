@@ -122,14 +122,11 @@ class Welcome extends CI_Controller {
 		$seats = @$_POST['seats'];
 		$phone = $_POST['phone'];
 		$name = $_POST['name'];
-		
-		if(!($this->judgeSeat($seats))){
-			echo "<a href='http://shiyida.net:8080/ticket/'>亲！有人在你之前选定该座位了哟！请您点击这里重新选座..</a>";
-		}
-		else{
+		$code = $_POST['checkcode'];
+		if(!empty($seats) && !empty($phone) && !empty($name) && (strcasecmp($code,$session_code)==0)){
 			//得到支付总额；
 			$money = $this->getTotalFee($seats);
-			
+		
 			//获取token需要的各种参数
 			$data['format'] = "xml";
 			$data['v'] = "2.0";
@@ -141,7 +138,7 @@ class Welcome extends CI_Controller {
 			$data['subject'] = "pay for tickets";
 			$data['totalFee'] = $money;
 			//参数配置结束
-			
+		
 			//向订单表插入订单信息
 			$order['oid'] = $phone.time();
 			$order['phone'] = $phone;
@@ -227,8 +224,6 @@ class Welcome extends CI_Controller {
 		$html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
 		echo $html_text;
 	}
-	
-	
 	//支付失败重新支付页面
 	public function payAgain(){
 		//传递订单号（数组）；
@@ -259,9 +254,18 @@ class Welcome extends CI_Controller {
 		$totalFee = $this->seats->getTotalFee($seats);
 		return $totalFee;
 	}
-	private function judgeSeat($seats){
+	//判断座位是否被占用
+	private function judgeSeat(){
+		$seats = @$_POST['seats'];
 		$result = $this->seats->judgeSeat($seats);
-		return $result;
+		if($result){
+			//座位已经被占
+			echo 0;
+		}
+		else{
+			//座位可以选择
+			echo 1;
+		}
 	}
 	//各种测试....
 	public function test(){
