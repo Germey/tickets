@@ -15,14 +15,18 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	public $time = 30;
+
 	function __construct(){
-		session_start();
+		//10分钟后过期
+		session_start(600);
 		parent::__construct();
 		$this->load->helper("url");
 		$this->load->model("seats_model","seats");
 		$this->load->model("ticket_model","ticket");
 		
 	}
+
 	//加载主界面
 	public function index(){
 		$this->loadHeader();
@@ -39,11 +43,24 @@ class Welcome extends CI_Controller {
 		$_SESSION["code"]=$code->getCheckCode();  //将验证码保存到服务器中
 	} 
 
+	//判断验证码是否正确
 	public function checkCode(){
 		$code = $_POST['checkcode'];
-		$session_code = $_SESSION["code"];
+		$sessionCode = $_SESSION["code"];
 		//不区分大小写比较验证码
-		if(strcasecmp($code,$session_code)==0){
+		if(strcasecmp($code,$sessionCode)==0){
+			echo 1;
+		}else{
+			echo 0;
+		}
+	}
+
+	//判断手机验证码是否正确
+	public function checkPhoneCode(){
+		$code = $_POST['phonecode'];
+		$sessionPhoneCode = $_SESSION["phonecode"];
+		//不区分大小写比较验证码
+		if(strcasecmp($code,$sessionPhoneCode)==0){
 			echo 1;
 		}else{
 			echo 0;
@@ -71,6 +88,51 @@ class Welcome extends CI_Controller {
 		$this->seats->getSeatsSaled();
 	}
 
+	//创建随机手机验证码
+	private function createCode(){
+		$code="1234567890";
+		$string='';
+		//从字符串中取出随机的字符
+		for($i=0; $i < 6; $i++){
+			$char=$code{rand(0, strlen($code)-1)};
+			$string.=$char;
+		}
+		//返回字符内容
+		return $string;
+	}
+
+	//发送手机验证码
+	public function sendPhoneCode(){
+		require_once(APPPATH."third_party/phone.class.php");
+		$phonecode = new PhoneCode();
+		//$phone = "15153173902";
+		$phone = $_POST["phone"];
+		$checkcode = $_POST["checkcode"];
+		if(strcasecmp($checkcode,$_SESSION['code'])!=0){
+			//验证码不正确
+			echo "2";
+			return;
+		}
+		$code = $this->createCode();
+		$_SESSION['phonecode'] = $code;
+		$url = "http://open.bizapp.com/api/sms/templateSend";
+		$param="appId=F0000036&tpId=2029158&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=".$phone."&fields=选票支付系统||".$code."||5分钟内||崔庆才";
+		$gbkparam = iconv("UTF-8","GBK//TRANSLIT",$param);
+		$result = $phonecode->postSend($url,$gbkparam);
+		//正则表达式匹配
+		$pattern="/\<resultcode\>(.*)\<\/resultcode\>/i";
+		if(preg_match($pattern, $result, $arr)){
+			//如果状态码为1，发送成功
+			if($arr[1]="100"){
+				echo "1";
+			}else{
+				echo "0";
+			}
+		}else{
+			echo "0";
+		}
+	}
+
 	//获得已经预定的座位,测试使用
 	private function getSeatsOrdered(){
 		$this->seats->getSeatsOrdered();
@@ -86,6 +148,7 @@ class Welcome extends CI_Controller {
 			echo "0";
 		}
 	}
+
 	//获得座位信息
 	public function loadSeats(){
 		$this->load->model("seats_model","seats");

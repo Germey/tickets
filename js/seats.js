@@ -4,6 +4,7 @@ $(function(){
 	var findPhone = "";
 	var codeResult = 0;
 	var judgeResult =0;
+	var phoneCodeResult = 0;
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
@@ -130,7 +131,7 @@ $(function(){
 				$("#mymodal").modal("hide");
 			});
 		}
-		if(phoneResult&&nameResult&&ticketResult==2&&codeResult&&judgeResult){
+		if(phoneResult&&nameResult&&ticketResult==2&&codeResult&&judgeResult&&phoneCodeResult){
 			$("#buy-form").submit();
 		}
 	}
@@ -435,11 +436,73 @@ $(function(){
 			return 2;
 		}
 	}
+	function getPhoneCode(){
+		var phoneResult = checkPhone();
+		if(phoneResult){
+			$("#buy-form #phonecodebtn").val("正在发送").attr("disabled","true");
+			$.post(getPhoneCodeUrl(),
+			{"phone":$("#buy-form #phone").val(),
+			"checkcode":$("#buy-form #checkcode").val()},
+			function(data){
+				if(data==1){
+					time = 60;
+					var task = setInterval(function(){
+						time = time - 1;
+						$("#buy-form #phonecodebtn").val(time+"秒重发");
+						if(time == 0){
+							clearInterval(task);
+							$("#buy-form #phonecodebtn").val("点击获取").removeAttr("disabled");
+						}
+					}
+					,1000);
+				}else if(data==2){
+					$("#mymodal").modal("show");
+					$("#mymodal .modal-body p").html("亲，请输入正确的验证码！");
+					$("#buy-form #phonecodebtn").val("点击获取").removeAttr("disabled");
+					$("#mymodal button").click(function(){
+						$("#mymodal").modal("hide");
+					});
+				}else{
+					$("#mymodal").modal("show");
+					$("#mymodal .modal-body p").html("亲，不好意思，发送失败！");
+					$("#buy-form #phonecodebtn").val("点击获取").removeAttr("disabled");
+					$("#mymodal button").click(function(){
+						$("#mymodal").modal("hide");
+					});
+				}
+			});
+		}else{
+			$("#mymodal").modal("show");
+			$("#mymodal .modal-body p").html("亲，请输入正确的手机号！");
+			$("#buy-form #phonecodebtn").val("点击获取").removeAttr("disabled");
+			$("#mymodal button").click(function(){
+				$("#mymodal").modal("hide");
+			});
+		}
+		
+	}
+	function checkPhoneCode(){
+		code = $(this).val();
+		$.post(getCheckPhoneCodeUrl(),
+		{"phonecode":code},
+		function(data){
+			if(data==1){
+				phoneCodeResult=1;
+				$("#buy-form #phonecode").parent().next().children(".label").html("<img src="+getRightPic()+">");
+			}else{
+				phoneCodeResult=0;
+				$("#buy-form #phonecode").parent().next().children(".label").html("<img src="+getWrongPic()+">");
+			}
+		});
+	}
+	
+	
 	/* bind thc check */
+	$("#buy-form #phonecode").bind("input propertychange",checkPhoneCode);
 	$("#buy-form #checkcode").bind("input propertychange",checkCode);
 	$("#buy-form #phone").bind("blur",checkPhone);
 	$("#buy-form #name").bind("blur",checkName);
-
+	$("#buy-form #phonecodebtn").bind("click",getPhoneCode);
 	
 });
 

@@ -28,8 +28,14 @@
 		function getCheckCodeUrl(){
 			return '<?php echo base_url();?>index.php/welcome/checkCode';
 		}
+		function getCheckPhoneCodeUrl(){
+			return '<?php echo base_url();?>index.php/welcome/checkPhoneCode';
+		}
 		function getjudgeSeatUrl(){
 			return '<?php echo base_url();?>index.php/welcome/judgeSeat';
+		}
+		function getPhoneCodeUrl(){
+			return '<?php echo base_url();?>index.php/welcome/sendPhoneCode';
 		}
 		function getSeatPrice(rank){
 			var price = 0;

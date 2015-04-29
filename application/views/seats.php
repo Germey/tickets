@@ -173,6 +173,17 @@
 								<div><img src="<?php echo base_url();?>index.php/welcome/getCode" onclick="this.src='<?php echo base_url();?>index.php/welcome/getCode?'+Math.random()"><br></div>
 							</div>
 						</div>
+						<div class="form-item code-item">
+							<div class="form-input">
+								<input type="text" class="form-control text" placeholder="手机验证码" name="phonecode" id="phonecode">
+							</div>
+							<div class="form-label">
+								<div class="label"></div>
+							</div>
+							<div class="getphonecode">
+								<div><input type="button" value="点击获取" class="btn btn-primary" id="phonecodebtn"></div>
+							</div>
+						</div>
 						<input type="text" name="money" hidden="true" value="0.01"> 
 						<div id="total-money"><span>¥ <span><span id="price">0.00</span></div>
 						<input type="button" class="btn btn-primary button" value="去支付" name="sub" id="sub">

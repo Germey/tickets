@@ -429,6 +429,10 @@ body{
 	float: right;
 	margin: 17px 5% 0 10px;
 }
+#seats .code-item .getphonecode{
+	float: right;
+	margin: 15px 5% 0 10px;
+}
 /* 底部版权 */
 .foot{
 	text-align:center;
