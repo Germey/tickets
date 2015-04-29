@@ -435,8 +435,8 @@ $(function(){
 			return 2;
 		}
 	}
-	/* bind thc blur check */
-	$("#buy-form #checkcode").bind("blur",checkCode);
+	/* bind thc check */
+	$("#buy-form #checkcode").bind("input propertychange",checkCode);
 	$("#buy-form #phone").bind("blur",checkPhone);
 	$("#buy-form #name").bind("blur",checkName);
 

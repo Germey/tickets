@@ -34,9 +34,9 @@ class Welcome extends CI_Controller {
 	
 	public function getCode(){
 		require_once(APPPATH."third_party/code.class.php");
-	    $code=new Code(80, 30, 4);
-	    $code->showImage();   //输出到页面中供 注册或登录使用
-	    $_SESSION["code"]=$code->getCheckCode();  //将验证码保存到服务器中
+		$code=new Code(80, 30, 4);
+		$code->showImage();   //输出到页面中供 注册或登录使用
+		$_SESSION["code"]=$code->getCheckCode();  //将验证码保存到服务器中
 	} 
 
 	public function checkCode(){
@@ -67,7 +67,7 @@ class Welcome extends CI_Controller {
 	}
 	
 	//获得已支付的座位,测试使用
-	private function getSeatsSaled(){
+	private  function getSeatsSaled(){
 		$this->seats->getSeatsSaled();
 	}
 
