@@ -5,6 +5,7 @@ $(function(){
 	var codeResult = 0;
 	var judgeResult =0;
 	var phoneCodeResult = 0;
+	var submmitted = 0;
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");
@@ -132,7 +133,10 @@ $(function(){
 			});
 		}
 		if(phoneResult&&nameResult&&ticketResult==2&&codeResult&&judgeResult&&phoneCodeResult){
-			$("#buy-form").submit();
+			if(submmitted==0){
+				$("#buy-form").submit();
+				submmitted = 1;
+			}
 		}
 	}
 
