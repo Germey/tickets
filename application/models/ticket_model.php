@@ -81,7 +81,6 @@
 			$sql = "INSERT INTO  `orders` (`oid` ,`phone` ,`name` ,`state` ,`sid`,`fail_time`,`money`)
 					VALUES ('$oid',  '$phone',  '$name',  '$state',  '$sid','$failTime','$money');";
 			$result = $this->db->query($sql);
-			var_dump($result);
 			return $result;
 		}
 		//返回订单号和订单金额,在重新支付页面使用
