@@ -1,5 +1,5 @@
 $(function(){
-	var colNum = 25;
+	var colNum = 27;
 	var money = 0;
 	var findPhone = "";
 	var codeResult = 0;
@@ -16,7 +16,7 @@ $(function(){
 	function seat_item_click(){
 		if($(this).attr("state")==0){
 			if($(this).attr("select")==0){
-				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("col")+"座 ¥"+getSeatPrice($(this).attr("rank"))+'<span><img src='+getDelePic()+'></span></li>');
+				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("num")+"号 ¥"+getSeatPrice($(this).attr("rank"))+'<span><img src='+getDelePic()+'></span></li>');
 				$("#buy-form").append('<input type="hidden" id="hidden-'+$(this).attr("row")+'-'+$(this).attr("col")+'" value="'+((parseInt($(this).attr("row"))-1)*colNum + parseInt($(this).attr("col")))+'" name="seats[]">');
 				$(this).css("background-color","#E22");
 				$(this).attr("select","1");
@@ -66,7 +66,7 @@ $(function(){
 			"display":"block",
 			"top":event.pageY+y+"px",
 			"left":event.pageX-x+"px"
-		}).html("<p>"+$(this).attr("row")+"排"+$(this).attr("col")+"座</p>");
+		}).html("<p>"+$(this).attr("row")+"排"+$(this).attr("num")+"号</p>");
 		if($(this).attr("state")==1){
 			$("#seat-tip").html("<p>已售</p>");
 		}else if($(this).attr("state")==2){
@@ -183,7 +183,7 @@ $(function(){
 				$.each(res,function(index,info){
 					if(index==0){
 						$.each(info,function(i,content){
-							$("#find-result #bought ul").append('<li>'+content["row"]+'排'+content['col']+'列</li>');
+							$("#find-result #bought ul").append('<li>'+content["row"]+'排'+content['num']+'号</li>');
 						});
 						if(info.length==0){
 							$("#find-result #bought p").append('<p class="none-result">没有相关信息</p>')
@@ -202,7 +202,14 @@ $(function(){
 									$.each(value,function(i,sid){
 										var row = Math.floor((sid-1)/colNum)+1;
 										var col = sid - (row-1)*colNum;
-										var sid = $("<div></div>").addClass("sid").text(row+"排"+col+"列").appendTo(li);
+										/* calculate the num */
+										var num;
+										if(col<=13){
+											num = 26-2*(col-1);
+										}else{
+											num = 1+2*(i-14);
+										}
+										var sid = $("<div></div>").addClass("sid").text(row+"排"+num+"号").appendTo(li);
 										sid.parents(".items").addClass("sid-content");
 									 });
 								}else if(name=="fail_time"){

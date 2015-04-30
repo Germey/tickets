@@ -63,14 +63,16 @@
 		//往数据库插入座位，仅供测试使用，危险！
 		private function addSeats(){
 			$count=0;
-			for($i=1;$i<=20;$i++){
-				for($j=1;$j<=25;$j++){
+			for($i=1;$i<=18;$i++){
+				for($j=1;$j<=27;$j++){
 					$count++;
-					if($i<=4) 
-						$rank=1;
-					else 
-						$rank=2;
-					$sql="insert into seats(sid,rank,row,col,state) values(".$count.",".$rank.",".$i.",".$j.",0)";
+					$num;
+					if($j<=13){
+						$num = 26-2*($j-1);
+					}else{
+						$num = 1+2*($j-14);
+					}
+					$sql="insert into seats(sid,rank,row,col,state,num) values($count,1,$i,$j,0,$num)";
 					$result = $this->db->query($sql);
 					echo "第".$count."条,录入".$result==0?"失败":"成功";
 				}

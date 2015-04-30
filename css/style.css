@@ -102,7 +102,7 @@ body{
 #seats #seats-container{
 	margin:auto;
 	overflow: hidden;
-	width: 265px;
+	width: 312px;
 }
 #seats #total-money{
 	background-color:#28B881;
@@ -170,7 +170,7 @@ body{
 }
 #seats #seats-container .middle{
 	margin: auto;
-	width: 265px;
+	width: 312px;
 }
 #seats .group-names .group-name  {
 	width:30%;
