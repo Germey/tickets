@@ -116,7 +116,7 @@ class Welcome extends CI_Controller {
 		$code = $this->createCode();
 		$_SESSION['phonecode'] = $code;
 		$url = "http://open.bizapp.com/api/sms/templateSend";
-		$param="appId=F0000036&tpId=2029158&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=".$phone."&fields=选票支付系统||".$code."||5分钟内||崔庆才";
+		$param="appId=F0000036&tpId=2029158&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=".$phone."&fields=选票支付系统||".$code."||5分钟内||大乘五蕴文化传媒";
 		$gbkparam = iconv("UTF-8","GBK//TRANSLIT",$param);
 		$result = $phonecode->postSend($url,$gbkparam);
 		//正则表达式匹配

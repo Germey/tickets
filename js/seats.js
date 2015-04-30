@@ -224,8 +224,8 @@ $(function(){
 							var del = $("<div></div>").addClass("delete").text("删除").appendTo(li);
 							/* bind the click function */
 							if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-								choosen.bind({"touchend click":choose_order});
-								del.bind({"touchend click":del_order});
+								choosen.bind({"touchend":choose_order});
+								del.bind({"touchend":del_order});
 							}else{
 								choosen.bind({"click":choose_order});
 								del.bind({"click":del_order});
