@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div id="seats-container" name="seats-container">
-		<div id="group-1" class="groups side" style="display:none;">
+		<div id="group-1" class="groups left" style="display:none;">
 		<?php 
 			//前面部分排数，后面部分排数，左边部分列数，中间列数，右边列数
 			$row1=10;$row2=8;$col1=7;$col2=13;$col3=7;
@@ -64,7 +64,7 @@
 			} 
 		?>
 		</div>
-		<div id="group-3" class="groups side" style="display:none;">
+		<div id="group-3" class="groups right" style="display:none;">
 		<?php 
 			for($i=1;$i<=$row1;$i++){
 				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>
@@ -76,7 +76,7 @@
 			} 
 		?>
 		</div>
-		<div id="group-4" class="groups side" style="display:none;">
+		<div id="group-4" class="groups left" style="display:none;">
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=1;$j<=$col1;$j++){ ?>
@@ -100,7 +100,7 @@
 			} 
 		?>
 		</div>
-		<div id="group-6" class="groups side" style="display:none;">
+		<div id="group-6" class="groups right" style="display:none;">
 		<?php 
 			for($i=$row1+1;$i<=$row1+$row2;$i++){
 				for($j=$col1+$col2+1;$j<=$col1+$col2+$col3;$j++){ ?>

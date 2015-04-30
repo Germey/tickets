@@ -11,9 +11,12 @@ $(function(){
 		$("#seats-container #seat-1-1").remove();
 		$("#seats-container #seat-1-2").remove();
 		$("#seats-container #seat-1-3").remove();
+		$("#seats-container #seat-1-4").before($("<div></div>").css({"width":"72px","height":"10px","float":"left"}));
 		$("#seats-container #seat-2-1").remove();
 		$("#seats-container #seat-2-2").remove();
+		$("#seats-container #seat-2-3").before($("<div></div>").css({"width":"48px","height":"10px","float":"left"}));
 		$("#seats-container #seat-3-1").remove();
+		$("#seats-container #seat-3-2").before($("<div></div>").css({"width":"24px","height":"10px","float":"left"}));
 		$("#seats-container #seat-1-25").remove();
 		$("#seats-container #seat-1-26").remove();
 		$("#seats-container #seat-1-27").remove();

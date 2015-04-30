@@ -164,10 +164,15 @@ body{
 	position: relative;
 	top: -2px;
 }
-#seats #seats-container .side{
+#seats #seats-container .left{
 	margin: auto;
 	width: 168px;
 }
+#seats #seats-container .right{
+	margin: auto;
+	width: 168px;
+}
+
 #seats #seats-container .middle{
 	margin: auto;
 	width: 312px;
