@@ -6,6 +6,22 @@ $(function(){
 	var judgeResult =0;
 	var phoneCodeResult = 0;
 	var submmitted = 0;
+	/* remove seats which not exist */
+	function removeSomeSeats(){
+		$("#seats-container #seat-1-1").remove();
+		$("#seats-container #seat-1-2").remove();
+		$("#seats-container #seat-1-3").remove();
+		$("#seats-container #seat-2-1").remove();
+		$("#seats-container #seat-2-2").remove();
+		$("#seats-container #seat-3-1").remove();
+		$("#seats-container #seat-1-25").remove();
+		$("#seats-container #seat-1-26").remove();
+		$("#seats-container #seat-1-27").remove();
+		$("#seats-container #seat-2-26").remove();
+		$("#seats-container #seat-2-27").remove();
+		$("#seats-container #seat-3-27").remove();
+	}
+	removeSomeSeats();
 	$(".seat-item").each(function(){
 		if($(this).attr("state")==1){
 			$(this).css("background-color","#888");

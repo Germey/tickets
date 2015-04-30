@@ -80,7 +80,6 @@
 			$money = $order['money'];
 			$sql = "INSERT INTO  `orders` (`oid` ,`phone` ,`name` ,`state` ,`sid`,`fail_time`,`money`)
 					VALUES ('$oid',  '$phone',  '$name',  '$state',  '$sid','$failTime','$money');";
-			echo $sql;
 			$result = $this->db->query($sql);
 			var_dump($result);
 			return $result;
