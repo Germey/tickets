@@ -63,6 +63,9 @@ body{
 	background-color:#eee;
 }
 /* 简介 */
+#introduction{
+	padding: 40px 0 60px 0;
+}
 #introduction .intro-item{
 	padding:40px 0 20px 0;
 	text-align:center;
@@ -78,6 +81,10 @@ body{
 }
 #introduction .intro-item .icon3{
 	color:#3AE470;
+}
+#introduction .intro-item img{
+	width:250px;
+	height:250px;
 }
 #introduction .intro-item p{
 	margin-top:30px;
