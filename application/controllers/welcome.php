@@ -187,22 +187,21 @@ class Welcome extends CI_Controller {
 		$name = $_POST['name'];
 		$code = $_POST['checkcode'];
 		$session_code = $_SESSION["code"];
-		if(!empty($seats) && !empty($phone) && !empty($name) && (strcasecmp($code,$session_code)==0)){
+		$phoneCode = $_POST['phonecode'];
+		if(!empty($seats) && !empty($phone) && !empty($name) && (strcasecmp($code,$session_code)==0) && ($_SESSION['phonecode']==$phoneCode)){
 			//得到支付总额；
 			$money = $this->getTotalFee($seats);
-		
 			//获取token需要的各种参数
 			$data['format'] = "xml";
 			$data['v'] = "2.0";
 			$data['reqId'] = @date('Ymdhis');
-			$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
+			$data['notifyUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/notify";
 			$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
 			$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
 			$data['outTradNo'] = $phone.time();
-			$data['subject'] = "pay for tickets";
+			$data['subject'] = "李政军演唱会门票";
 			$data['totalFee'] = $money;
 			//参数配置结束
-		
 			//向订单表插入订单信息
 			$order['oid'] = $phone.time();
 			$order['phone'] = $phone;
@@ -241,14 +240,53 @@ class Welcome extends CI_Controller {
 			$this->load->view('fail');
 		}
 	}
-
+	//支付宝异步通知页面
+	public function notify(){
+		require_once(APPPATH."../phonepay/alipay.config.php");
+		require_once(APPPATH."../phonepay/lib/alipay_notify.class.php");
+		$alipayNotify = new AlipayNotify($alipay_config);
+		$verify_result = $alipayNotify->verifyNotify();
+		if($verify_result) {//验证成功
+			$doc = new DOMDocument();	
+			if ($alipay_config['sign_type'] == 'MD5') {
+				$doc->loadXML($_POST['notify_data']);
+			}
+	
+			if ($alipay_config['sign_type'] == '0001') {
+				$doc->loadXML($alipayNotify->decrypt($_POST['notify_data']));
+			}
+			if( ! empty($doc->getElementsByTagName( "notify" )->item(0)->nodeValue) ) {
+				//得到商户订单号
+				$out_trade_no = $doc->getElementsByTagName( "out_trade_no" )->item(0)->nodeValue;
+				//支付宝交易号
+				$trade_no = $doc->getElementsByTagName( "trade_no" )->item(0)->nodeValue;
+				//交易状态
+				$trade_status = $doc->getElementsByTagName( "trade_status" )->item(0)->nodeValue;
+				if($trade_status == 'TRADE_FINISHED') {						
+					$this->ticket->updateInfo($out_trade_no);
+					//更新座位表信息；锁定已被订购座位
+					$this->seats->updateInfo($out_trade_no);
+					echo "success";		//请不要修改或删除
+				}
+				else if ($trade_status == 'TRADE_SUCCESS') {
+					$this->ticket->updateInfo($out_trade_no);
+					//更新座位表信息；锁定已被订购座位
+					$this->seats->updateInfo($out_trade_no);
+					echo "success";		//请不要修改或删除
+				}
+			}
+		}
+		else {
+			//验证失败
+			echo "fail";
+		}
+	}
 	//根据授权码token调用交易接口alipay.wap.auth.authAndExecute
 	public function doTrade($data){
 		require_once(APPPATH."../phonepay/alipay.config.php");
 		require_once(APPPATH."../phonepay/lib/alipay_submit.class.php");
 		//请求业务参数详细
 		$req_data = '<direct_trade_create_req><notify_url>' . $data['notifyUrl'] . '</notify_url><call_back_url>' . $data['callBackUrl'] . '</call_back_url><seller_account_name>' . trim($alipay_config['seller_email']) . '</seller_account_name><out_trade_no>' . $data['outTradNo'] . '</out_trade_no><subject>' . $data['subject'] . '</subject><total_fee>' . $data['totalFee'] . '</total_fee><merchant_url>' . $data['merchantUrl'] . '</merchant_url></direct_trade_create_req>';
-		
 		$para_token = array(
 				"service" => "alipay.wap.trade.create.direct",
 				"partner" => trim($alipay_config['partner']),
@@ -262,17 +300,12 @@ class Welcome extends CI_Controller {
 		//建立请求
 		$alipaySubmit = new AlipaySubmit($alipay_config);
 		$html_text = $alipaySubmit->buildRequestHttp($para_token);
-
 		//URLDECODE返回的信息
 		$html_text = urldecode($html_text);
-		
 		//解析远程模拟提交后返回的信息
 		$para_html_text = $alipaySubmit->parseResponse($html_text);
-		
 		$request_token = $para_html_text['request_token'];
-	
 		$req_data = '<auth_and_execute_req><request_token>' . $request_token . '</request_token></auth_and_execute_req>';
-		
 		$parameter = array(
 				"service" => "alipay.wap.auth.authAndExecute",
 				"partner" => trim($alipay_config['partner']),
@@ -300,7 +333,7 @@ class Welcome extends CI_Controller {
 				$data['format'] = "xml";
 				$data['v'] = "2.0";
 				$data['reqId'] = @date('Ymdhis');
-				$data['notifyUrl'] = "http://shiyida.net:8080/ticket/phonepay/notify_url.php";
+				$data['notifyUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/notify";
 				$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
 				$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
 				$data['outTradNo'] = $order[$i];
