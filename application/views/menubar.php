@@ -14,10 +14,10 @@
 			  <div class="collapse navbar-collapse navbar-responsive-collapse" id="collapse">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#ad-carousel">主页面</a></li>
-						<li><a href="#ad-carousel">简介</a></li>
-						<li><a href="#tech-container">选座</a></li>
-						<li><a href="#project-container">支付</a></li>
-						<li><a href="#contact-me">关于</a></li>
+						<li><a href="#introduction">主办方</a></li>
+						<li><a href="#seats">选座</a></li>
+						<li><a href="#foot">关于</a></li>
+						<li><a href="http://shiyida.net">世易大</a></li>
 					</ul>
 			  </div>
 			</div>

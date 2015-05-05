@@ -1,6 +1,7 @@
 		<!-- 版权 -->
-		<div class="foot">
-			 Copyright © 2015  托管于 <a href="http://www.aliyun.com/">阿里云主机</a>  
+		<div class="foot" id="foot">
+			 <p>Copyright © 2015 济南大乘五蕴文化传媒有限公司</p>
+			 <p>鲁ICP备15010888号</p>
 		</div>
 		<!-- 版权结束 -->
 		<!-- validate -->
