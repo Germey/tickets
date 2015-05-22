@@ -16,6 +16,25 @@
 			date_default_timezone_set('PRC');
 		}
 		
+
+		public function getInfoByOrder($oid) {
+			$sql = "select * from orders where oid ='".$oid."'";
+			$result = $this->db->query($sql)->result_array();
+			$sids = unserialize($result[0]['sid']);
+			$name = $result[0]['name'];
+			$seats = "";
+			foreach ($sids as $sid) {
+				$seatSql = "select * from seats where sid = ".$sid;
+				$seatResult = $this->db->query($seatSql);
+				$seatResult = $seatResult->result_array();
+				$seats .= $seatResult[0]['row']."排".$seatResult[0]['num']."号 ";
+			}
+			$msg['seats'] = $seats;
+			$msg['name'] = $name;
+			$msg['oid'] = $oid;
+			return $msg;
+		}
+
 		//查询已买的票的信息
 		public function findInfo($phone){
 			$result = array();

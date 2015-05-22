@@ -438,7 +438,7 @@ html{
 }
 #seats .sign{
 	overflow: hidden;
-	width: 220px;
+	width: 250px;
 	margin: auto;
 	position: relative;
 	left: 5px;
@@ -447,6 +447,7 @@ html{
 #seats .sign .item{
 	overflow: hidden;
 	float: left;
+	margin-top: 7px;
 }
 #seats .sign .item .des{
 	float: left;
@@ -504,4 +505,7 @@ html{
 }
 .not-choose-order{
 	background-color: #C7C4C4;
+}
+.choosen-color{
+	background-color: #E22 !important;
 }

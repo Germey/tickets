@@ -105,13 +105,16 @@
 				while($rank = mysql_fetch_array($result)){
 					switch($rank['rank']){
 					case 1:
-						$totalFee += 0.01;
+						$totalFee += 100;
 						break;
 					case 2:
-						$totalFee += 0.01;
+						$totalFee += 60;
 						break;
 					case 3:
-						$totalFee += 0.01;
+						$totalFee += 40;
+						break;
+					case 3:
+						$totalFee += 20;
 						break;
 					}
 				}

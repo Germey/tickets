@@ -170,7 +170,7 @@ class Welcome extends CI_Controller {
 	//查询买到的票的信息
 	public function findInfo(){
 		//$phone = $_POST['phone'];
-		$phone = $_POST['phone'];
+		$phone = htmlspecialchars($_POST['phone']);
 		$result = $this->ticket->findInfo($phone);
 		echo json_encode($result);
 	} 
@@ -183,11 +183,11 @@ class Welcome extends CI_Controller {
 			2.向订单表插入订单信息
 		*/
 		$seats = @$_POST['seats'];
-		$phone = $_POST['phone'];
-		$name = $_POST['name'];
-		$code = $_POST['checkcode'];
+		$phone = htmlspecialchars($_POST['phone']);
+		$name = htmlspecialchars($_POST['name']);
+		$code = htmlspecialchars($_POST['checkcode']);
 		$session_code = $_SESSION["code"];
-		$phoneCode = $_POST['phonecode'];
+		$phoneCode = htmlspecialchars($_POST['phonecode']);
 		if(!empty($seats) && !empty($phone) && !empty($name) && (strcasecmp($code,$session_code)==0) && ($_SESSION['phonecode']==$phoneCode)){
 			//得到支付总额；
 			$money = $this->getTotalFee($seats);
@@ -240,6 +240,31 @@ class Welcome extends CI_Controller {
 			$this->load->view('fail');
 		}
 	}
+
+	//发送购买成功的短信
+	public function sendSuccessMsg($oid){
+		require_once(APPPATH."third_party/phone.class.php");
+		$msg = $this->ticket->getInfoByOrder($oid);
+		$phonesend = new PhoneCode();
+		require_once(APPPATH."third_party/phone.class.php");
+		$url = "http://open.bizapp.com/api/sms/templateSend";
+		$param="appId=F0000036&tpId=2194304&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=18366119732&fields=".$msg['name']."||演唱会支付||大乘五蕴文化传媒公司||大乘五蕴文化传媒";
+		$gbkparam = iconv("UTF-8","GBK//TRANSLIT",$param);
+		$result = $phonesend->postSend($url,$gbkparam);
+		//正则表达式匹配
+		$pattern="/\<resultcode\>(.*)\<\/resultcode\>/i";
+		if(preg_match($pattern, $result, $arr)){
+			//如果状态码为1，发送成功
+			if($arr[1]="100"){
+				echo "1"; 
+			}else{
+				echo "0";
+			}
+		}else{
+			echo "0";
+		}
+	}
+
 	//支付宝异步通知页面
 	public function notify(){
 		require_once(APPPATH."../phonepay/alipay.config.php");
@@ -266,12 +291,14 @@ class Welcome extends CI_Controller {
 					$this->ticket->updateInfo($out_trade_no);
 					//更新座位表信息；锁定已被订购座位
 					$this->seats->updateInfo($out_trade_no);
+					sendSuccessMsg($out_trade_no);
 					echo "success";		//请不要修改或删除
 				}
 				else if ($trade_status == 'TRADE_SUCCESS') {
 					$this->ticket->updateInfo($out_trade_no);
 					//更新座位表信息；锁定已被订购座位
 					$this->seats->updateInfo($out_trade_no);
+					sendSuccessMsg($out_trade_no);
 					echo "success";		//请不要修改或删除
 				}
 			}

@@ -30,6 +30,15 @@ $(function(){
 			$(this).css("background-color","#888");
 		}else if($(this).attr("state")==2){
 			$(this).css("background-color","#66B");
+		}else if($(this).attr("rank")==1){
+			/* VIP */
+			$(this).css("background-color","#FD9B03");
+		}else if($(this).attr("rank")==2){
+			/* rank 2 */
+			$(this).css("background-color","#E0EA51");
+		}else if($(this).attr("rank")==3){
+			/* rank 3 */
+			$(this).css("background-color","#A9EF68");
 		}
 	});
 	function seat_item_click(){
@@ -37,7 +46,7 @@ $(function(){
 			if($(this).attr("select")==0){
 				$("#seat-choosen ul").append('<li id="selected-'+$(this).attr("row")+'-'+$(this).attr("col")+'" class="choosen-item">'+$(this).attr("row")+"排"+$(this).attr("num")+"号 ¥"+getSeatPrice($(this).attr("rank"))+'<span><img src='+getDelePic()+'></span></li>');
 				$("#buy-form").append('<input type="hidden" id="hidden-'+$(this).attr("row")+'-'+$(this).attr("col")+'" value="'+((parseInt($(this).attr("row"))-1)*colNum + parseInt($(this).attr("col")))+'" name="seats[]">');
-				$(this).css("background-color","#E22");
+				$(this).addClass('choosen-color');
 				$(this).attr("select","1");
 				judgeSeat($(this));
 				/* change money */
@@ -48,7 +57,7 @@ $(function(){
 					id = $(this).parents("li").attr("id");
 					row = id.split('-')[1];
 					col = id.split('-')[2];
-					$("#seat-"+row+"-"+col).attr("select",0).css("background-color","#FFF");
+					$("#seat-"+row+"-"+col).attr("select",0).removeClass('choosen-color');
 					/* change money */
 					money-=getSeatPrice($("#seat-"+row+"-"+col).attr("rank"));
 					$("#total-money #price").text(money.toFixed(2));
@@ -66,7 +75,7 @@ $(function(){
 				});
 				/* end of choosen-item listener */
 			}else if($(this).attr("select")==1){
-				$(this).css("background-color","#FFF");
+				$(this).removeClass('choosen-color');
 				$(this).attr("select","0");
 				/* change money */
 				money-=getSeatPrice($(this).attr("rank"));
@@ -87,9 +96,9 @@ $(function(){
 			"left":event.pageX-x+"px"
 		}).html("<p>"+$(this).attr("row")+"排"+$(this).attr("num")+"号</p>");
 		if($(this).attr("state")==1){
-			$("#seat-tip").html("<p>已售</p>");
+			$("#seat-tip").html("<p>"+$(this).attr("row")+"排"+$(this).attr("num")+"号</p>");
 		}else if($(this).attr("state")==2){
-			$("#seat-tip").html("<p>已预定</p>");
+			$("#seat-tip").html("<p>"+$(this).attr("row")+"排"+$(this).attr("num")+"号</p>");
 		}
 		event.stopPropagation();
 	}
@@ -226,7 +235,7 @@ $(function(){
 										if(col<=13){
 											num = 26-2*(col-1);
 										}else{
-											num = 1+2*(i-14);
+											num = 1+2*(col-14);
 										}
 										var sid = $("<div></div>").addClass("sid").text(row+"排"+num+"号").appendTo(li);
 										sid.parents(".items").addClass("sid-content");
@@ -404,7 +413,7 @@ $(function(){
 					$("#mymodal").modal("hide");
 				});
 				if(this_seat){
-					$(this_seat).css("background-color","#FFF");
+					$(this_seat).removeClass("choosen-color");
 					$(this_seat).attr("select","0");
 					/* change money */
 					money-=getSeatPrice($(this_seat).attr("rank"));

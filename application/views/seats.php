@@ -114,7 +114,7 @@
 		</div>
 	</div>
 	<div class="sign" style="display:none;">
-		<div class="item">
+		<div class="item" style=" margin-left: 20px;">
 			<div class="des">已售</div>
 			<div class="color" style="background-color: #888;"></div>
 		</div>
@@ -125,6 +125,22 @@
 		<div class="item">
 			<div class="des">当前选择</div>
 			<div class="color" style="background-color: #E22;"></div>
+		</div>
+		<div class="item">
+			<div class="des">￥100</div>
+			<div class="color" style="background-color: #FD9B03;"></div>
+		</div>
+		<div class="item">
+			<div class="des">￥60</div>
+			<div class="color" style="background-color: #E0EA51;"></div>
+		</div>
+		<div class="item">
+			<div class="des">￥40</div>
+			<div class="color" style="background-color: #A9EF68;"></div>
+		</div>
+		<div class="item">
+			<div class="des">￥20</div>
+			<div class="color" style="background-color: #FFF;"></div>
 		</div>
 	</div>
 	<div class="back" style="display:none;">

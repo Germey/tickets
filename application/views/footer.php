@@ -41,17 +41,17 @@
 		function getSeatPrice(rank){
 			var price = 0;
 			switch(rank){
-				case 1:
-					price = 0.01;
+				case '1':
+					price = 100;
 					break;
-				case 2:
-					price = 0.01;
+				case '2':
+					price = 60;
 					break;
-				case 3:
-					price = 0.01;
+				case '3':
+					price = 40;
 					break;
-				default:
-					price = 0.01;
+				case '4':
+					price = 20;
 					break;
 			}
 			return price;
