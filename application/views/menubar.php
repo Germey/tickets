@@ -8,7 +8,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="#ad-carousel" class="navbar-brand">选座支付</a>
+					<a href="#ad-carousel" class="navbar-brand">李政军个人演唱会</a>
 			  </div>
 			  <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
 			  <div class="collapse navbar-collapse navbar-responsive-collapse" id="collapse">

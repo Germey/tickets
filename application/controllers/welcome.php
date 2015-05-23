@@ -248,7 +248,7 @@ class Welcome extends CI_Controller {
 		$phonesend = new PhoneCode();
 		require_once(APPPATH."third_party/phone.class.php");
 		$url = "http://open.bizapp.com/api/sms/templateSend";
-		$param="appId=F0000036&tpId=2194304&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=18366119732&fields=".$msg['name']."||演唱会支付||大乘五蕴文化传媒公司||大乘五蕴文化传媒";
+		$param="appId=F0000036&tpId=2194304&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=".$msg['phone']."&fields=".$msg['name']."||演唱会支付||大乘五蕴，入场携带有效证件||大乘五蕴文化传媒";
 		$gbkparam = iconv("UTF-8","GBK//TRANSLIT",$param);
 		$result = $phonesend->postSend($url,$gbkparam);
 		//正则表达式匹配

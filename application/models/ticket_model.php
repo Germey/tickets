@@ -22,6 +22,7 @@
 			$result = $this->db->query($sql)->result_array();
 			$sids = unserialize($result[0]['sid']);
 			$name = $result[0]['name'];
+			$phone = $result[0]['phone'];
 			$seats = "";
 			foreach ($sids as $sid) {
 				$seatSql = "select * from seats where sid = ".$sid;
@@ -32,6 +33,7 @@
 			$msg['seats'] = $seats;
 			$msg['name'] = $name;
 			$msg['oid'] = $oid;
+			$msg['phone'] = $phone;
 			return $msg;
 		}
 

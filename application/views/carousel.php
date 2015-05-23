@@ -14,10 +14,7 @@
 
 					<div class="container">
 						<div class="carousel-caption">
-							<h2>支付</h2>
-
-							<p>就是这么任性</p>
-
+							
 						</div>
 					</div>
 				</div>
@@ -26,33 +23,27 @@
 
 					<div class="container">
 						<div class="carousel-caption">
-							<h2>选座</h2>
-
-							<p>就是这么方便</p>
+							
 
 						</div>
 					</div>
 				</div>
 				<div class="item">
-					<img src="<?php echo base_url();?>images/3.png" alt="3 slide">
+					<img src="<?php echo base_url();?>images/5.png" alt="3 slide">
 
 					<div class="container">
 						<div class="carousel-caption">
-							<h2>约会</h2>
-
-							<p>就是这么时尚</p>
+							
 
 						</div>
 					</div>
 				</div>
 				<div class="item">
-					<img src="<?php echo base_url();?>images/4.png" alt="4 slide">
+					<img src="<?php echo base_url();?>images/6.gif" alt="4 slide">
 					
 					<div class="container">
 						<div class="carousel-caption">
-							<h2>花钱</h2>
-
-							<p>就是这么霸气</p>
+							
 
 						</div>
 					</div>

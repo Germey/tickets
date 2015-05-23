@@ -78,6 +78,13 @@ html{
 /* 轮播 */
 .carousel{
 	font-family:"Microsoft Yahei";
+	margin-top: 50px;
+}
+.carousel-control.left{
+	background: none !important;
+}
+.carousel-control.right{
+	background: none !important;
 }
 .carousel-inner .item img{
 	width:100%;
