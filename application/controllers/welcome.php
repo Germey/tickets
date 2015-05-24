@@ -197,7 +197,7 @@ class Welcome extends CI_Controller {
 			$data['reqId'] = @date('Ymdhis');
 			$data['notifyUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/notify";
 			$data['callBackUrl'] = "http://shiyida.net:8080/ticket/index.php/welcome/callBack";
-			$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/out.php";
+			$data['merchantUrl'] = "http://shiyida.net:8080/ticket/phonepay/fail.php";
 			$data['outTradNo'] = $phone.time();
 			$data['subject'] = "李政军演唱会门票";
 			$data['totalFee'] = $money;
@@ -234,11 +234,16 @@ class Welcome extends CI_Controller {
 			$this->ticket->updateInfo($out_trade_no);
 			//更新座位表信息；锁定已被订购座位
 			$this->seats->updateInfo($out_trade_no);
+			$this->sendSuccessMsg($out_trade_no);
 			$this->load->view('success');
 		}
 		else {
 			$this->load->view('fail');
 		}
+	}
+
+	public function viewSuccess() {
+		$this->load->view('success');
 	}
 
 	//发送购买成功的短信
@@ -248,21 +253,9 @@ class Welcome extends CI_Controller {
 		$phonesend = new PhoneCode();
 		require_once(APPPATH."third_party/phone.class.php");
 		$url = "http://open.bizapp.com/api/sms/templateSend";
-		$param="appId=F0000036&tpId=2194304&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=".$msg['phone']."&fields=".$msg['name']."||演唱会支付||大乘五蕴，入场携带有效证件||大乘五蕴文化传媒";
+		$param="appId=F0000036&tpId=2194304&customerId=C1012422&userId=U1013951&password=CQCcqc123&phones=".$msg['phone']."&fields=".$msg['name']."||李政军个人演唱会支付||世易大微信公众号，入场请携带有效身份证件||大乘五蕴文化传媒";
 		$gbkparam = iconv("UTF-8","GBK//TRANSLIT",$param);
 		$result = $phonesend->postSend($url,$gbkparam);
-		//正则表达式匹配
-		$pattern="/\<resultcode\>(.*)\<\/resultcode\>/i";
-		if(preg_match($pattern, $result, $arr)){
-			//如果状态码为1，发送成功
-			if($arr[1]="100"){
-				echo "1"; 
-			}else{
-				echo "0";
-			}
-		}else{
-			echo "0";
-		}
 	}
 
 	//支付宝异步通知页面
@@ -291,14 +284,13 @@ class Welcome extends CI_Controller {
 					$this->ticket->updateInfo($out_trade_no);
 					//更新座位表信息；锁定已被订购座位
 					$this->seats->updateInfo($out_trade_no);
-					sendSuccessMsg($out_trade_no);
 					echo "success";		//请不要修改或删除
 				}
 				else if ($trade_status == 'TRADE_SUCCESS') {
 					$this->ticket->updateInfo($out_trade_no);
 					//更新座位表信息；锁定已被订购座位
 					$this->seats->updateInfo($out_trade_no);
-					sendSuccessMsg($out_trade_no);
+					
 					echo "success";		//请不要修改或删除
 				}
 			}

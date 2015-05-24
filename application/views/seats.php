@@ -204,6 +204,7 @@
 						<div id="total-money"><span>¥ <span><span id="price">0.00</span></div>
 						<input type="button" class="btn btn-primary button" value="去支付" name="sub" id="sub">
 					</form>
+					<p style="font-size: 14px">温馨提示：微信已屏蔽支付宝<br>请跳转后复制链接至浏览器支付</p>
 				</div>
 				<div class="col-sm-6 col-xs-12">
 					<form id="find-form">
